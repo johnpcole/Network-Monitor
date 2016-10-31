@@ -30,7 +30,7 @@ class DisplayDriver:
 		self.currentmessagetext = "Monitor Starting..."
 		self.messagewidth = self.appwindow.gettextwidth(self.currentmessagetext, "Banner Text")
 		self.bannerspeed = 5
-
+		self.clockvisibility = 128
 
 
 # ===========================================================================================================
@@ -58,9 +58,9 @@ class DisplayDriver:
 
 
 
-	# -------------------------------------------------------------------
-	# Updates the clock
-	# -------------------------------------------------------------------
+# -------------------------------------------------------------------
+# Updates the clock
+# -------------------------------------------------------------------
 
 	def updateclock(self):
 
@@ -78,20 +78,68 @@ class DisplayDriver:
 
 	def refreshbanner(self, statusdatabase):
 
-		showalerts = self.messages.updatemessagelist(statusdatabase.getalertitems(self.recentthreshold),
-											DisplayFunction.issafetodelertcurrentmessage(self.currentmessageposition))
+		# Get list of devices that are alerting from the status database
+		alertslist = statusdatabase.getalertitems(self.recentthreshold)
+
+		# Determine if it is safe to delete the current message
+		# (Because it's not in view)
+		issafetodeletecurrentmessage = DisplayFunction.issafetodelertcurrentmessage(self.currentmessageposition)
+
+		# Update the message list, and return whether there are any messages
+		queuedalertsflag = self.messages.updatemessagelist(alertslist, issafetodeletecurrentmessage)
 
 		#self.appwindow.printbox(Vector.createfromvalues(0, 0), Vector.createfromvalues(480, 92), "Yellow")
-		if showalerts == True:
+
+		if self.updateclockvisibility(queuedalertsflag) == True:
 			self.scrollbannermessage()
-			bannercolour = DisplayFunction.bannercolour(self.messages.getcurrentmessagetype())
-			self.drawbannericon(self.messages.getcurrentmessagetype(), bannercolour)
-			textposition = DisplayFunction.bannerposition(self.currentmessageposition, 1)
-			self.appwindow.printtext(self.currentmessagetext, textposition, "Left", bannercolour, "Banner Text")
+			self.drawmessagingbanner()
 		else:
 			self.currentmessageposition = 100000
-			textposition = DisplayFunction.bannerposition(2400, 0)
-			self.appwindow.printtext(self.datetimestring, textposition, "Centre", "Grey", "Banner Text")
+			self.drawclockbanner()
+
+
+# -------------------------------------------------------------------
+# Updates clock visibility
+# -------------------------------------------------------------------
+
+	def updateclockvisibility(self, showalertflag):
+
+		if showalertflag == True:
+			self.clockvisibility = max(0, self.clockvisibility - 1)
+		else:
+			self.clockvisibility = min(128, self.clockvisibility + 1)
+
+		if self.clockvisibility > 0:
+			outcome = False
+		else:
+			outcome = True
+
+		return outcome
+
+
+
+# -------------------------------------------------------------------
+# Draws the clock banner
+# -------------------------------------------------------------------
+
+	def drawclockbanner(self):
+
+		textposition = DisplayFunction.bannerposition(-999, -1)
+		textcolour = DisplayFunction.getgreyshade(self.clockvisibility)
+		self.appwindow.printtext(self.datetimestring, textposition, "Centre", textcolour, "Clock Text")
+
+
+
+# -------------------------------------------------------------------
+# Draws the messages banner
+# -------------------------------------------------------------------
+
+	def drawmessagingbanner(self):
+
+		bannercolour = DisplayFunction.bannercolour(self.messages.getcurrentmessagetype())
+		self.drawbannericon(self.messages.getcurrentmessagetype(), bannercolour)
+		textposition = DisplayFunction.bannerposition(self.currentmessageposition, 1)
+		self.appwindow.printtext(self.currentmessagetext, textposition, "Left", bannercolour, "Banner Text")
 
 
 
@@ -192,17 +240,23 @@ class DisplayDriver:
 				connectiontypecount = connectiontypecount + 1
 				iconposition = DisplayFunction.itemposition("Narrow", devicecounter, connectiontypecount, devicetotal)
 				self.appwindow.printicon(connectiontype, iconposition, tilecolour)
-		
-		
-		
+				self.appwindow.printicon("connectionoverlay", iconposition, "None")
+
+
+
 	def drawalertbox(self, devicecounter, statusobject, devicetotal, tiletype, tilecolour):
 
 		if DisplayFunction.alertboxflash(statusobject.getalertstatus(self.recentthreshold)) == True:
-			boxposition = DisplayFunction.itemposition(tiletype, devicecounter, -1, devicetotal)
-			boxsize = DisplayFunction.alertboxdimensions(tiletype)
-			self.appwindow.printbox(boxposition, boxsize, tilecolour)
+			thickness = 2
+			colour = tilecolour
+		else:
+			thickness = 1
+			colour = "Dark Grey"
+		boxposition = DisplayFunction.itemposition(tiletype, devicecounter, -1, devicetotal)
+		boxsize = DisplayFunction.alertboxdimensions(tiletype)
+		self.appwindow.printbox(boxposition, boxsize, colour, thickness)
 
-	
+
 
 	# ===========================================================================================================
 	# Get Information

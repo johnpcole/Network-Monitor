@@ -110,7 +110,7 @@ class DefineApplicationWindow:
 	def drawboxoutline(self, topleft, rectanglesize, colour, thickness):
 
 		GUI.draw.rect(self.windowobject, self.colourlibrary.get(colour),
-														(topleft.getcoordinates(), rectanglesize.getcoordinates()), thickness)
+												(topleft.getcoordinates(), rectanglesize.getcoordinates()), thickness)
 
 
 

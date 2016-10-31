@@ -27,6 +27,8 @@ class Window:
 	def setupimages(self):
 
 		imagelist = {}
+		imagelist['connectionoverlay'] = "Port"
+		imagelist['deviceoverlay'] = "Device"
 		imagelist['alert'] = "Banner"
 		imagelist['cloud'] = "Device"
 		imagelist['earth'] = "Device"
@@ -59,7 +61,7 @@ class Window:
 	def setupfonts(self):
 
 		self.windowobject.addfont("Unknown Device Label", "graphics/gillsanscondensed.ttf", 30)
-		#self.windowobject.addfont("Banner Text", "graphics/gillsansnormal.ttf", 72)
+		self.windowobject.addfont("Clock Text", "graphics/gillsansnormal.ttf", 68)
 		self.windowobject.addfont("Banner Text", "graphics/gillsanscondensed.ttf", 72)
 
 
@@ -88,7 +90,8 @@ class Window:
 	def printicon(self, iconlabel, positioncoordinates, colourlabel):
 
 		iconname = iconlabel.lower()
-		self.windowobject.drawbox(positioncoordinates, self.geticonsize(iconname), colourlabel)
+		if colourlabel != "None":
+			self.windowobject.drawbox(positioncoordinates, self.geticonsize(iconname), colourlabel)
 		self.windowobject.drawimage(iconname, positioncoordinates)
 
 
@@ -106,9 +109,9 @@ class Window:
 # Draws a box outline of thickness 2
 # -------------------------------------------------------------------
 
-	def printbox(self, topleftvector, dimensionsvector, colourlabel):
+	def printbox(self, topleftvector, dimensionsvector, colourlabel, thickness):
 		
-		self.windowobject.drawboxoutline(topleftvector, dimensionsvector, colourlabel, 2)
+		self.windowobject.drawboxoutline(topleftvector, dimensionsvector, colourlabel, thickness)
 
 
 
