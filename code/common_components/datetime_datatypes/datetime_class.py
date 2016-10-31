@@ -211,3 +211,17 @@ class DefineDateTime:
 		outcome = outcome + datecomponent.getreadabledate(dayflag, dateflag, monthflag, yearflag, separator)
 		return outcome
 
+
+
+# ---------------------------------------------------------
+# Returns the fractional now time - DOESNT USE THE CLASS!!!
+# ---------------------------------------------------------
+
+	def getdummynowfraction(self, secondsmodeflag):
+
+		if secondsmodeflag == True:
+			outcome = DateTimeFunction.getcurrentsecondfraction()
+		else:
+			outcome = DateTimeFunction.getcurrentsubsecondfraction()
+
+		return outcome

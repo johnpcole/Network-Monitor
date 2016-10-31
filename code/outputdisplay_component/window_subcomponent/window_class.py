@@ -21,14 +21,13 @@ class Window:
 		self.imagesize = {}
 		self.setupimages()
 		self.setupfonts()
+		self.setupcolours()
 
 
 
 	def setupimages(self):
 
 		imagelist = {}
-		imagelist['connectionoverlay'] = "Port"
-		imagelist['deviceoverlay'] = "Device"
 		imagelist['alert'] = "Banner"
 		imagelist['cloud'] = "Device"
 		imagelist['earth'] = "Device"
@@ -62,11 +61,30 @@ class Window:
 
 		self.windowobject.addfont("Unknown Device Label", "graphics/gillsanscondensed.ttf", 30)
 		self.windowobject.addfont("Clock Text", "graphics/gillsansnormal.ttf", 68)
-		self.windowobject.addfont("Banner Text", "graphics/gillsanscondensed.ttf", 72)
+		self.windowobject.addfont("Banner Text", "graphics/gillsansnormal.ttf", 72)
 
 
 
-	# ===========================================================================================================
+	def setupcolours(self):
+
+		self.windowobject.addcolour("info", 128, 255, 255)
+		self.windowobject.addcolour("alert", 255, 128, 128)
+		self.windowobject.addcolour("Expected - Connected - Bright", 0, 255, 128)
+		self.windowobject.addcolour("Expected - Disconnected - Bright", 255, 0, 0)
+		self.windowobject.addcolour("Optional - Connected - Bright", 255, 255, 128)
+		self.windowobject.addcolour("Optional - Disconnected - Bright", 0, 0, 255)
+		self.windowobject.addcolour("Unexpected - Connected - Bright", 255, 128, 0)
+		self.windowobject.addcolour("Unexpected - Disconnected - Bright", 64, 64, 64)
+		self.windowobject.addcolour("Expected - Connected - Dark", 32, 160, 96)
+		self.windowobject.addcolour("Expected - Disconnected - Dark", 160, 32, 32)
+		self.windowobject.addcolour("Optional - Connected - Dark", 160, 160, 96)
+		self.windowobject.addcolour("Optional - Disconnected - Dark", 32, 32, 160)
+		self.windowobject.addcolour("Unexpected - Connected - Dark", 160, 96, 32)
+		self.windowobject.addcolour("Unexpected - Disconnected - Dark", 64, 64, 64)
+
+
+
+# ===========================================================================================================
 # Object Processing
 # ===========================================================================================================
 

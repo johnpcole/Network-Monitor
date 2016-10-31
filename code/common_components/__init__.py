@@ -7,3 +7,4 @@ from fileprocessing_framework import File
 from userinterface_framework import GUI
 from terminalinterface_framework import Terminal
 from appdisplay_datatype import AppDisplay
+from appinput_datatype import AppInput

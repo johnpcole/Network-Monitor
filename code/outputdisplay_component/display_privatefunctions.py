@@ -7,40 +7,31 @@ from ..common_components import DateTime
 
 def bannercolour(alerttype):
 
-	if alerttype == "info":
-		outcome = "Faded Cyan"
-	elif alerttype == "alert":
-		outcome = "Faded Red"
-	else:
-		print "Unexpected Alert Category - ", alerttype
-		outcome = "White"
-
-	return outcome
+	return alerttype
 
 
 
 def devicecolour(devicecategory, connectionstatus):
 
-	if devicecategory == "Expected":
-		if connectionstatus == True:
-			outcome = "Light Green"
-		else:
-			outcome = "Red"
-	elif devicecategory == "Optional":
-		if connectionstatus == True:
-			outcome = "Faded Yellow"
-		else:
-			outcome = "Blue"
-	elif devicecategory == "Unexpected":
-		if connectionstatus == True:
-			outcome = "Orange"
-		else:
-			outcome = "Dark Grey"
+	if connectionstatus == True:
+		prefix = " - Connected"
 	else:
-		print "Unexpected Device Category - ", devicecategory
-		outcome = "White"
+		prefix = " - Disconnected"
+
+	return devicecategory + prefix
+
+
+
+def deviceshade(highlightmode):
+
+	if highlightmode == True:
+		outcome = " - Bright"
+	else:
+		outcome = " - Dark"
 
 	return outcome
+
+
 
 
 
@@ -59,7 +50,7 @@ def bannerposition(positioninteger, componentinteger):
 		hor = 240
 		ver = 0
 	else:
-		ver = 12
+		ver = 10
 
 	return Vector.createfromvalues(hor, ver)
 
@@ -123,17 +114,32 @@ def alertboxdimensions(tiletypestring):
 # Returns whether the alert box should be displayed
 # -------------------------------------------------------------------
 
-def alertboxflash(enableflag):
+# def alertboxflash(enableflag):
+#
+# 	outcome = False
+#
+# 	if enableflag == True:
+# 		currentdatetime = DateTime.getnow()
+# 		years, months, days, hours, minutes, seconds = currentdatetime.getsextuplet()
+# 		if (seconds % 2) == 0:
+# 			outcome = True
+#
+# 	return outcome
 
-	outcome = False
 
-	if enableflag == True:
-		currentdatetime = DateTime.getnow()
-		years, months, days, hours, minutes, seconds = currentdatetime.getsextuplet()
-		if (seconds % 2) == 0:
-			outcome = True
+# -------------------------------------------------------------------
+# Returns the alert box colour
+# -------------------------------------------------------------------
+
+def alertboxflash(tilecolour, deadcolour):
+
+	currentdatetime = DateTime.getnowfraction(True) % 240
+	currentfraction = min(100.0, abs(currentdatetime - 120.0)) / 100.0
+	outcome = "mix " + tilecolour + "/" + str(currentfraction) + "/" + deadcolour
 
 	return outcome
+
+
 
 
 
@@ -148,6 +154,6 @@ def issafetodelertcurrentmessage(position):
 
 
 def getgreyshade(lightness):
-	s = "000" + str(lightness)
+	s = "000" + str(int(lightness))
 	s = s[-3:]
 	return "rgb " + s + " " + s + " " + s

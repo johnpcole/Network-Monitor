@@ -103,4 +103,9 @@ def getnow():
 	newdatetime = DateTimeClass.DefineDateTime()
 	newdatetime.settonow()
 	return newdatetime
-	
+
+
+
+def getnowfraction(secondsmodeflag):
+	newdatetime = DateTimeClass.DefineDateTime()
+	return newdatetime.getdummynowfraction(secondsmodeflag)

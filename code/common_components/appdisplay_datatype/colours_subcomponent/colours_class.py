@@ -1,3 +1,6 @@
+import colours_privatefunctions as ColourFunction
+
+
 class DefineColourLibrary:
 	# ==========================================================================================
 	# Object Setup
@@ -12,7 +15,7 @@ class DefineColourLibrary:
 		self.key['Black'] = (0,0,0)
 		self.key['Red'] = (255,0,0)
 		self.key['Yellow'] = (255,255,0)
-		self.key['Green'] = (0,255,0)
+		self.key['Green'] = (0,255,0)          # Lime
 		self.key['Cyan'] = (0,255,255)
 		self.key['Blue'] = (0,0,255)
 		self.key['Magenta'] = (255,0,255)
@@ -31,10 +34,17 @@ class DefineColourLibrary:
 		self.key['Faded Yellow'] = (255,255,128)
 		self.key['Faded Cyan'] = (128,255,255)
 		self.key['Faded Magenta'] = (255,128,255)
+		# Dark Colours
+		self.key['Dark Red'] = (128,0,0)             # Maroon
+		self.key['Dark Yellow'] = (128,128,0)        # Olive
+		self.key['Dark Green'] = (0,128,0)           # Green
+		self.key['Dark Cyan'] = (0,128,128)          # Teal
+		self.key['Dark Blue'] = (0,0,128)            # Navy
+		self.key['Dark Magenta'] = (128,0,128)
 		self.key['Grey'] = (128,128,128)
 		# More
-		self.key['Dark Grey'] = (64, 64, 64)
-		self.key['Light Grey'] = (192, 192, 192)
+		self.key['Dark Grey'] = (64,64,64)
+		self.key['Light Grey'] = (192,192,192)
 
 
 
@@ -56,8 +66,18 @@ class DefineColourLibrary:
 	def get(self, colourlabel):
 
 		if colourlabel[:3] == "rgb":
-			outcome = ( int(colourlabel[4:7]), int(colourlabel[8:11]), int(colourlabel[12:15]) )
+			outcome = ColourFunction.getrgbtriplet(colourlabel[4:])
+		elif colourlabel[:3] == "mix":
+			colouronelabel, colourtwolabel, fractionvalue = ColourFunction.getcolourmixvalues(colourlabel[4:])
+			#if colourtwolabel == "Transparent":
+			#	outcome = ColourFunction.gettransparentquadlet(self.get(colouronelabel), fractionvalue)
+			#	print "Transparent: ", outcome
+			#else:
+			outcome = ColourFunction.getmixturetriplet(self.get(colouronelabel), self.get(colourtwolabel),
+																										fractionvalue)
 		else:
 			outcome = self.key[colourlabel]
 
 		return outcome
+
+

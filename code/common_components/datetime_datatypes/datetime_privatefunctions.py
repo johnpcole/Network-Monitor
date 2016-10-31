@@ -35,3 +35,37 @@ def getcurrentdatetime():
 
 	return currentdate, currenttime
 
+
+
+# ---------------------------------------------------------
+# Gets the current fraction of second
+# ---------------------------------------------------------
+
+def getcurrentsubsecondfraction():
+
+	currentdatetime = str(PythonDateTime.datetime.now())
+
+	try:
+		currentfraction = int(currentdatetime[20:22])
+	except:
+		currentfraction = 0
+
+	return currentfraction
+
+
+
+# ---------------------------------------------------------
+# Gets the current fraction of second
+# ---------------------------------------------------------
+
+def getcurrentsecondfraction():
+	currentdatetime = str(PythonDateTime.datetime.now())
+	currentseconds = 100 * int(currentdatetime[17:19])
+
+	try:
+		currentfraction = int(currentdatetime[20:22])
+	except:
+		currentfraction = 0
+
+	return currentseconds + currentfraction
+
