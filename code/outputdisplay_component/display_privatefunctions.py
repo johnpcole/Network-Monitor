@@ -54,6 +54,9 @@ def bannerposition(positioninteger, componentinteger):
 
 	if componentinteger == 1:
 		hor = hor + 78
+		ver = -2
+	elif componentinteger == -1:
+		hor = 240
 		ver = 0
 	else:
 		ver = 12
@@ -141,3 +144,10 @@ def issafetodelertcurrentmessage(position):
 		outcome = False
 
 	return outcome
+
+
+
+def getgreyshade(lightness):
+	s = "000" + str(lightness)
+	s = s[-3:]
+	return "rgb " + s + " " + s + " " + s

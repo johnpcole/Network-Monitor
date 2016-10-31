@@ -45,15 +45,22 @@ class DeviceStatus:
 
 	def refreshinformation(self, deviceobject, updatedatetimeobject):
 	
-		connectivitychange = 0
-		anychange = False
+		oldconnectivity = self.getconnectionstatus("Any")
+		change = False
 		for porttype in ['Wired', 'Wireless', 'Unknown']:
-			currentchange = self.updateconnectionstatus(porttype,
-														deviceobject.porttypeseensince(updatedatetimeobject, porttype))
-			if currentchange != 0:
-				anychange = True
-			connectivitychange = connectivitychange + currentchange
-		if anychange == True:
+			if 0 != self.updateconnectionstatus(porttype,
+													deviceobject.porttypeseensince(updatedatetimeobject, porttype)):
+				change = True
+
+		connectivitychange = 0
+		if self.getconnectionstatus("Any") == True:
+			if oldconnectivity == False:
+				connectivitychange = 1
+		else:
+			if oldconnectivity == True:
+				connectivitychange = -1
+
+		if change == True:
 			self.setchangelog(updatedatetimeobject, connectivitychange)
 
 
