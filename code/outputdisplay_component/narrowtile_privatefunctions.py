@@ -30,9 +30,9 @@ def gethorizontalpositionlist(itemcountinteger, rowindex):
 		
 	elif itemcountinteger == 5:
 		if rowindex == 0:
-			horlist = [64, 192, 320]
+			horlist = [96, 192, 288]
 		else:
-			horlist = [128, 211]
+			horlist = [144, 240]
 		
 	elif itemcountinteger == 6:
 		if rowindex == 0:

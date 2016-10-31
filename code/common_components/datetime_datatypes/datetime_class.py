@@ -196,3 +196,18 @@ class DefineDateTime:
 
 		return self.timecomponent
 
+
+
+# ---------------------------------------------------------
+# Returns the datetime as a readable string
+# ---------------------------------------------------------
+
+	def getreadabledate(self, timeformat, secondsflag, dayflag, dateflag, monthflag, yearflag, separator):
+
+		timecomponent = self.gettimecomponent()
+		datecomponent = self.getdatecomponent()
+
+		outcome = timecomponent.getreadabletime(timeformat, secondsflag) + " "
+		outcome = outcome + datecomponent.getreadabledate(dayflag, dateflag, monthflag, yearflag, separator)
+		return outcome
+

@@ -114,3 +114,45 @@ def sanitisetime(secondsintoday):
 		resanitisedsecondsintoday = secondsintoday
 
 	return resanitisedsecondsintoday, dayoffset
+
+
+
+# ---------------------------------------------------------
+# Returns a human readable version of the time, as a string
+# ---------------------------------------------------------
+
+def getreadabletime(hours, minutes, seconds, timeformat, secondsflag):
+
+	outcome = ""
+	if timeformat == "12ap":
+		if hours > 11:
+			outcome = " pm"
+		else:
+			outcome = " am"
+
+	nhours = hours
+	if (timeformat == "12") or (timeformat == "12ap"):
+		if hours > 12:
+			nhours = hours - 12
+		if nhours == 0:
+			nhours = 12
+		htext = str(nhours)
+	else:
+		htext = gettwodigitvalue(nhours)
+
+
+
+	if secondsflag == True:
+		outcome = ":" + gettwodigitvalue(seconds) + outcome
+
+	return htext + ":" + gettwodigitvalue(minutes) + outcome
+
+
+
+def gettwodigitvalue(rawval):
+
+	outcome = str(rawval)
+	if rawval < 10:
+		outcome = "0" + outcome
+
+	return outcome

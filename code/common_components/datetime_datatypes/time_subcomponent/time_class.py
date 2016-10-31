@@ -141,3 +141,14 @@ class DefineTime:
 		return self.secondsintoday
 
 
+
+	# ---------------------------------------------------------
+	# Returns the time as a seconds-into-day integer
+	# ---------------------------------------------------------
+
+	def getreadabletime(self, timeformat, secondsflag):
+
+		hour, minute, second = self.gettriplet()
+		return TimeFunction.getreadabletime(hour, minute, second, timeformat, secondsflag)
+
+

@@ -142,7 +142,7 @@ class DefineApplicationWindow:
 
 	def drawtext(self, outputtext, textposition, alignment, colour, fontname):
 
-		textwidth = Vector.createfrompair(self.textgenerator.gettextwidth(outputtext, fontname)).getx()
+		textwidth = (self.gettextsize(outputtext, fontname)).getx()
 
 		if alignment == "Left":
 			margin = Vector.createorigin()
@@ -167,3 +167,7 @@ class DefineApplicationWindow:
 	def getscreensize(self):
 		return self.screensize
 
+
+
+	def gettextsize(self, outputtext, fontname):
+		return Vector.createfrompair(self.textgenerator.gettextsize(outputtext, fontname))
