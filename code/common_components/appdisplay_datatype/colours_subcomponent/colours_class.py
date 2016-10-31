@@ -32,6 +32,9 @@ class DefineColourLibrary:
 		self.key['Faded Cyan'] = (128,255,255)
 		self.key['Faded Magenta'] = (255,128,255)
 		self.key['Grey'] = (128,128,128)
+		# More
+		self.key['Dark Grey'] = (64, 64, 64)
+		self.key['Light Grey'] = (192, 192, 192)
 
 
 
@@ -51,4 +54,10 @@ class DefineColourLibrary:
 
 
 	def get(self, colourlabel):
-		return self.key[colourlabel]
+
+		if colourlabel[:3] == "rgb":
+			outcome = ( int(colourlabel[4:7]), int(colourlabel[8:11]), int(colourlabel[12:15]) )
+		else:
+			outcome = self.key[colourlabel]
+
+		return outcome

@@ -43,8 +43,8 @@ class Window:
 		imagelist['router'] = "Device"
 		imagelist['smartphone'] = "Device"
 		imagelist['tv'] = "Device"
-		imagelist['unknown'] = "Small Device"
-		imagelist['unknownconnection'] = "Port"
+		imagelist['unknowndevice'] = "Small Device"
+		imagelist['unknown'] = "Port"
 		imagelist['wired'] = "Port"
 		imagelist['wireless'] = "Port"
 		imagelist['wirelessrouter'] = "Device"
@@ -58,13 +58,13 @@ class Window:
 
 	def setupfonts(self):
 
-		self.windowobject.addfont("Unknown Device Label", "graphics/gillsanscondensed.ttf", 32)
-		
-		
+		self.windowobject.addfont("Unknown Device Label", "graphics/gillsanscondensed.ttf", 30)
+		#self.windowobject.addfont("Banner Text", "graphics/gillsansnormal.ttf", 72)
+		self.windowobject.addfont("Banner Text", "graphics/gillsanscondensed.ttf", 72)
 
 
 
-# ===========================================================================================================
+	# ===========================================================================================================
 # Object Processing
 # ===========================================================================================================
 
@@ -126,7 +126,7 @@ class Window:
 	
 		sizelabel = self.imagesize[iconlabel]
 		if sizelabel == "Banner":
-			outcome = Vector.createfromvalues(92, 92)
+			outcome = Vector.createfromvalues(64, 64) # Was 92
 		elif sizelabel == "Device":
 			outcome = Vector.createfromvalues(60, 60)
 		elif sizelabel == "Small Device":
@@ -140,6 +140,23 @@ class Window:
 		return outcome
 
 
+
+	# -------------------------------------------------------------------
+	# Text Width
+	# -------------------------------------------------------------------
+
+	def gettextwidth(self, outputtext, fontname):
+
+		return (self.windowobject.gettextsize(outputtext, fontname)).getx()
+
+
+
+	# -------------------------------------------------------------------
+	# Window Size
+	# -------------------------------------------------------------------
+
+	def getscreensize(self):
+		return self.windowsize
 
 
 

@@ -56,7 +56,7 @@ class NetworkScanner:
 		# If the last scan was longer ago than the refresh rate
 		if Duration.iswithinlimit(timesincelastscan, self.refreshrate) == False:
 
-			print "Performing Scan"
+			print "Performing Scan at ", self.scandate.getiso()
 
 			# Perform the scan
 			self.performnetworkscan()

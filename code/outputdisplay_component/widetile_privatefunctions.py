@@ -20,8 +20,8 @@ def getoffset(itemindexinteger):
 		ver = 4
 		hor = 4
 	else:
-		ver = 4
-		hor = 42
+		ver = 0
+		hor = 38
 		
 	return Vector.createfromvalues(hor, ver)
 

@@ -5,6 +5,20 @@ from ..common_components import DateTime
 
 
 
+def bannercolour(alerttype):
+
+	if alerttype == "info":
+		outcome = "Faded Cyan"
+	elif alerttype == "alert":
+		outcome = "Faded Red"
+	else:
+		print "Unexpected Alert Category - ", alerttype
+		outcome = "White"
+
+	return outcome
+
+
+
 def devicecolour(devicecategory, connectionstatus):
 
 	if devicecategory == "Expected":
@@ -21,10 +35,10 @@ def devicecolour(devicecategory, connectionstatus):
 		if connectionstatus == True:
 			outcome = "Orange"
 		else:
-			outcome = "Grey"
+			outcome = "Dark Grey"
 	else:
 		print "Unexpected Device Category - ", devicecategory
-		outcome = "Black"
+		outcome = "White"
 
 	return outcome
 
@@ -34,10 +48,16 @@ def devicecolour(devicecategory, connectionstatus):
 # Returns the coordinates of banner items
 # -------------------------------------------------------------------
 
-def bannerposition(positioninteger):
+def bannerposition(positioninteger, componentinteger):
 
-	ver = 0
-	hor = positioninteger
+	hor = 480 - int(positioninteger / 10)
+
+	if componentinteger == 1:
+		hor = hor + 78
+		ver = 0
+	else:
+		ver = 12
+
 	return Vector.createfromvalues(hor, ver)
 
 
@@ -103,7 +123,7 @@ def alertboxdimensions(tiletypestring):
 def alertboxflash(enableflag):
 
 	outcome = False
-	
+
 	if enableflag == True:
 		currentdatetime = DateTime.getnow()
 		years, months, days, hours, minutes, seconds = currentdatetime.getsextuplet()
@@ -112,7 +132,12 @@ def alertboxflash(enableflag):
 
 	return outcome
 
-	
-	
 
-	
+
+def issafetodelertcurrentmessage(position):
+	if position == 0:
+		outcome = True
+	else:
+		outcome = False
+
+	return outcome

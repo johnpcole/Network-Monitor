@@ -1,6 +1,8 @@
 from priorityitem_subcomponent import PriorityItem
+from alertitem_subcomponent import AlertItem
 from ..common_components import DateTime
-from operator import attrgetter # , itemgetter, methodcaller
+import operator as ListFunction
+
 
 
 # ---------------------------------------------------------
@@ -87,13 +89,12 @@ def populatenamelists(statusdevicelist):
 # 
 # ---------------------------------------------------------
 
-
 def populateprioritisednamelist(sublistnames, prioritylist, listsizelimit):
 
 	prioritydevicecount = 0
 	templist = prioritylist['FinalPriorityList']
 	for prioritylistname in sublistnames:
-		prioritylist[prioritylistname].sort(key=attrgetter('secondssincelastchanged'))
+		prioritylist[prioritylistname].sort(key=ListFunction.attrgetter('secondssincelastchanged'))
 		for pitem in prioritylist[prioritylistname]:
 			prioritydevicecount = prioritydevicecount + 1
 			if prioritydevicecount < listsizelimit + 1:
@@ -102,4 +103,19 @@ def populateprioritisednamelist(sublistnames, prioritylist, listsizelimit):
 
 
 
+# ---------------------------------------------------------
+#
+# ---------------------------------------------------------
 
+def getalertitems(statusdevicelist, datetimethreshold):
+
+	outcome = []
+	for device in statusdevicelist:
+		if device.getalertstatus(datetimethreshold) == True:
+			if device.getforcedalertstatus() == True:
+				alerttype = "alert"
+			else:
+				alerttype = "info"
+			outcome.append(AlertItem(device.getname(), device.getchangereason(), alerttype))
+
+	return outcome

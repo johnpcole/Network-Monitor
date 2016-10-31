@@ -16,7 +16,7 @@ class DefineTextGenerator:
 
 
 
-	def gettextwidth(self, textstring, fontname):
+	def gettextsize(self, textstring, fontname):
 		return self.fontlibrary[fontname].size(textstring)
 
 

@@ -1,7 +1,8 @@
 from window_subcomponent import Window
 import display_privatefunctions as DisplayFunction
-from ..common_components import Vector
+#from ..common_components import Vector
 from ..common_components import DateTime
+from messagelist_subcomponent import MessageList
 
 
 
@@ -20,9 +21,15 @@ class DisplayDriver:
 
 		# Current date time
 		self.recentthreshold = DateTime.createfromiso("20000101000000")
+		self.datetimestring = ""
+		self.recentdefinition = -60
 
-		# Last Updated
-		self.lastupdated = DateTime.createfromiso("20000101000000")
+		# Messages List
+		self.messages = MessageList()
+		self.currentmessageposition = 0
+		self.currentmessagetext = "Monitor Starting..."
+		self.messagewidth = self.appwindow.gettextwidth(self.currentmessagetext, "Banner Text")
+		self.bannerspeed = 5
 
 
 
@@ -37,44 +44,88 @@ class DisplayDriver:
 
 	def rundisplayoutputservice(self, statusdatabaseobject):
 
-		# Only refresh once a second
-		if self.updatedisplayclock() == True:
+		# Refresh the clock
+		self.updateclock()
 
-			# Refresh the device tiles
-			self.refreshdevicetiles(statusdatabaseobject)
+		# Refresh the device tiles
+		self.refreshdevicetiles(statusdatabaseobject)
 
-			# Refresh the screen
-			self.appwindow.refreshscreen()
+		# Refresh the banner area
+		self.refreshbanner(statusdatabaseobject)
+
+		# Refresh the screen
+		self.appwindow.refreshscreen()
+
+
+
+	# -------------------------------------------------------------------
+	# Updates the clock
+	# -------------------------------------------------------------------
+
+	def updateclock(self):
+
+		# Update the clock
+		self.recentthreshold = DateTime.getnow()
+		datetimestring = self.recentthreshold.getreadabledate("24", False, "3", "3", "0", "0", " ")
+		self.datetimestring = datetimestring[:5] + "   " + datetimestring[6:]
+		self.recentthreshold.adjustseconds(self.recentdefinition)
+
 
 
 # -------------------------------------------------------------------
-# Updates the display clock, returning true if the time has changed
+# Updates the message banner
 # -------------------------------------------------------------------
 
+	def refreshbanner(self, statusdatabase):
 
-	def updatedisplayclock(self):
+		showalerts = self.messages.updatemessagelist(statusdatabase.getalertitems(self.recentthreshold),
+											DisplayFunction.issafetodelertcurrentmessage(self.currentmessageposition))
 
-		currenttime = DateTime.getnow()
-
-		if DateTime.areidentical(currenttime, self.lastupdated) == False:
-			self.lastupdated.setfromobject(currenttime)
-			outcome = True
+		#self.appwindow.printbox(Vector.createfromvalues(0, 0), Vector.createfromvalues(480, 92), "Yellow")
+		if showalerts == True:
+			self.scrollbannermessage()
+			bannercolour = DisplayFunction.bannercolour(self.messages.getcurrentmessagetype())
+			self.drawbannericon(self.messages.getcurrentmessagetype(), bannercolour)
+			textposition = DisplayFunction.bannerposition(self.currentmessageposition, 1)
+			self.appwindow.printtext(self.currentmessagetext, textposition, "Left", bannercolour, "Banner Text")
 		else:
-			outcome = False
-
-		return outcome
+			self.currentmessageposition = 100000
+			textposition = DisplayFunction.bannerposition(2400, 0)
+			self.appwindow.printtext(self.datetimestring, textposition, "Centre", "Grey", "Banner Text")
 
 
 
 # -------------------------------------------------------------------
-# Updates all elements of the screen, flips the display
+# Scrolls the banner
+# -------------------------------------------------------------------
+
+	def scrollbannermessage(self):
+
+		self.currentmessageposition = self.currentmessageposition + self.bannerspeed
+		textposition = (DisplayFunction.bannerposition(self.currentmessageposition, 1)).getx()
+		if textposition < 0 - self.messagewidth:
+			self.changebannermessage()
+
+
+
+# -------------------------------------------------------------------
+# Changes the banner message
+# -------------------------------------------------------------------
+
+	def changebannermessage(self):
+
+		self.currentmessageposition = 0
+		self.currentmessagetext = self.messages.changemessage()
+		self.messagewidth = self.appwindow.gettextwidth(self.currentmessagetext, "Banner Text")
+
+
+
+# -------------------------------------------------------------------
+# Updates all the device tiles
 # -------------------------------------------------------------------
 
 	def refreshdevicetiles(self, statusdatabase):
 
-		self.recentthreshold = DateTime.getnow()
-		self.recentthreshold.adjustseconds(-30)
-	
 		knownindexer = 0
 		unknownindexer = 0
 		knowntotal = statusdatabase.getprioritisedstatuscount("Known")
@@ -106,11 +157,11 @@ class DisplayDriver:
 		if tiletype == "Narrow":
 			self.drawporticons(devicecounter, statusobject, devicetotal, tilecolour)
 
-		# Else write the MAC Address if it's an known device
+		# Else write the MAC Address if it's an unknown device
 		else:
 			iconposition = DisplayFunction.itemposition("Wide", devicecounter, 1, -999)
-			self.appwindow.windowobject.drawbox(iconposition, Vector.createfromvalues(200, 30), "Faded Yellow")
-			self.appwindow.printtext("88:88:88:88:88:88", iconposition, "Left", tilecolour, "Unknown Device Label")
+			#self.appwindow.windowobject.drawbox(iconposition, Vector.createfromvalues(199, 31), "Faded Yellow")
+			self.appwindow.printtext(statusobject.getname(), iconposition, "Left", tilecolour, "Unknown Device Label")
 
 		# Draw the alert box (if it's recently changed)
 		self.drawalertbox(devicecounter, statusobject, devicetotal, tiletype, tilecolour)
@@ -118,14 +169,21 @@ class DisplayDriver:
 		return (devicecounter + 1)
 
 
-		
+
+	def drawbannericon(self, icontype, iconcolour):
+
+		iconposition = DisplayFunction.bannerposition(self.currentmessageposition, 0)
+		self.appwindow.printicon(icontype, iconposition, iconcolour)
+
+
+
 	def drawdeviceicon(self, devicecounter, statusobject, devicetotal, tiletype, tilecolour):
 
 		iconposition = DisplayFunction.itemposition(tiletype, devicecounter, 0, devicetotal)
 		self.appwindow.printicon(statusobject.getimage(), iconposition, tilecolour)
-		
 
-		
+
+
 	def drawporticons(self, devicecounter, statusobject, devicetotal, tilecolour):
 	
 		connectiontypecount = 0
@@ -139,7 +197,7 @@ class DisplayDriver:
 		
 	def drawalertbox(self, devicecounter, statusobject, devicetotal, tiletype, tilecolour):
 
-		if DisplayFunction.alertboxflash(statusobject.haschangedsince(self.recentthreshold)) == True:
+		if DisplayFunction.alertboxflash(statusobject.getalertstatus(self.recentthreshold)) == True:
 			boxposition = DisplayFunction.itemposition(tiletype, devicecounter, -1, devicetotal)
 			boxsize = DisplayFunction.alertboxdimensions(tiletype)
 			self.appwindow.printbox(boxposition, boxsize, tilecolour)

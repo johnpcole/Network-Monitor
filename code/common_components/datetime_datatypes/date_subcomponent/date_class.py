@@ -133,7 +133,7 @@ class DefineDate:
 		newyear = originalyear + yearstoadd
 		
 		# The maximum number of days in the new month
-		maxdaysinnewmonth = DateFunction.getdaysinmonth(newmonth, isleapyear(newyear))
+		maxdaysinnewmonth = DateFunction.getdaysinmonth(newmonth, DateFunction.isleapyear(newyear))
 		
 		# If the original day of the month is later than the last day
 		# of the new month, reduce the day value
@@ -233,5 +233,17 @@ class DefineDate:
 	def getdaysintomillennium(self):
 
 		return self.daysintomillennium
+
+
+
+# ---------------------------------------------------------
+# Returns the date as a readable string
+# ---------------------------------------------------------
+
+	def getreadabledate(self, dayflag, dateflag, monthflag, yearflag, separator):
+
+		day, month, year = self.gettriplet()
+		return DateFunction.getreadabledate(day, month, year, dayflag, dateflag, monthflag, yearflag, separator)
+
 
 

@@ -1,7 +1,7 @@
 from devicestatus_subcomponent import DeviceStatus
 from ..common_components import DateTime
 from ..common_components import File
-import prioritylist_privatefunctions as PriorityFunction
+import reporting_privatefunctions as ReportingFunction
 
 
 
@@ -85,7 +85,7 @@ class StatusDatabase:
 		
 		# If there is no device, create a new device and return it
 		if statusdevice is None:
-			self.addstatusdevice(devicenamestring, "unknown", "Unexpected")
+			self.addstatusdevice(devicenamestring, "unknowndevice", "Unexpected")
 			outcome = self.getstatusdevicebyname(devicenamestring)
 		
 		# Or return the existing device
@@ -139,8 +139,8 @@ class StatusDatabase:
 				# Use the data from columns 1-3 to create a known device
 				self.addstatusdevice(sections[0], sections[2], sections[1])
 
-	
-	
+
+
 # ===========================================================================================================
 # Get Information
 # ===========================================================================================================
@@ -183,7 +183,20 @@ class StatusDatabase:
 
 	def getprioritisedstatuslist(self, knownlimit, unknownlimit):
 
-		return PriorityFunction.getprioritisedstatuslist(self.statusdevices, knownlimit, unknownlimit)
+		return ReportingFunction.getprioritisedstatuslist(self.statusdevices, knownlimit, unknownlimit)
+
+
+
+# ---------------------------------------------------------
+# This method returns the list of device names for devices
+# which have changed since the specified date, or are
+# in an inappropriate state
+# ---------------------------------------------------------
+
+	def getalertitems(self, datetimethreshold):
+		#for test in ReportingFunction.getrecentlychangeditems(self.statusdevices, datetimethreshold):
+			#print "Reporting Recently Changed at ", datetimethreshold.getiso(), " - ", test.getname(), test.getchangetype()
+		return ReportingFunction.getalertitems(self.statusdevices, datetimethreshold)
 
 
 
@@ -199,5 +212,5 @@ class StatusDatabase:
 				itemcount = itemcount + 1
 		
 		return itemcount
-				
-				
+
+

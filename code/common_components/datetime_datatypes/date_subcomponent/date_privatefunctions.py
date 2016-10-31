@@ -269,3 +269,132 @@ def isdatevalid(day, month, year):
 
 	return outcome
 
+
+
+# ---------------------------------------------------------
+# Returns a human readable version of the date, as a string
+# ---------------------------------------------------------
+
+def getreadabledate(day, month, year, dayflag, dateflag, monthflag, yearflag, separator):
+
+	outcome = ""
+
+	# Year
+	if yearflag != "0":
+		outcome = str(year)
+		if yearflag == "2":
+			outcome = outcome[-2:]
+		outcome = separator + outcome
+
+	# Month
+	if monthflag != "0":
+		if monthflag == "4":
+			ml = getmonthlabel(month)
+		elif monthflag == "3":
+			ml = getmonthlabel(month)[:3]
+		elif monthflag =="2":
+			ml = gettwodigitvalue(month)
+		else:
+			ml = str(month)
+		outcome = separator + ml + outcome
+
+	# Day
+	if dateflag == "3":
+		dl = getordinallabel(day)
+	elif dateflag == "2":
+		dl = gettwodigitvalue(day)
+	else:
+		dl = str(day)
+	outcome = dl + outcome
+
+	# Day of week
+	if dayflag != "0":
+		wl = getdayofweek(day, month, year)
+		if dayflag == "3":
+			wl = wl[:3]
+		outcome = wl + " " + outcome
+
+
+	return outcome
+
+
+
+def getdayofweek(day, month, year):
+
+	dayindex = converttriplettoelapseddays(day, month, year) % 7
+	if dayindex == 1:
+		outcome = "Saturday"
+	elif dayindex == 2:
+		outcome = "Sunday"
+	elif dayindex == 3:
+		outcome = "Monday"
+	elif dayindex == 4:
+		outcome = "Tuesday"
+	elif dayindex == 5:
+		outcome = "Wednesday"
+	elif dayindex == 6:
+		outcome = "Thursday"
+	elif dayindex == 7:
+		outcome = "Friday"
+	else:
+		outcome = "?????"
+	return outcome
+	
+	
+	
+def getmonthlabel(monthval):
+
+	if monthval == 1:
+		outcome = "January"
+	elif monthval == 2:
+		outcome = "February"
+	elif monthval == 3:
+		outcome = "March"
+	elif monthval == 4:
+		outcome = "April"
+	elif monthval == 5:
+		outcome = "May"
+	elif monthval == 6:
+		outcome = "June"
+	elif monthval == 7:
+		outcome = "July"
+	elif monthval == 8:
+		outcome = "August"
+	elif monthval == 9:
+		outcome = "September"
+	elif monthval == 10:
+		outcome = "October"
+	elif monthval == 11:
+		outcome = "November"
+	elif monthval == 12:
+		outcome = "December"
+	else:
+		outcome = "?????"
+
+	return outcome
+
+
+
+def getordinallabel(dayval):
+
+	dl = str(dayval)
+	if (dayval == 1) or (dayval == 21) or (dayval == 31):
+		outcome = dl + "st"
+	elif (dayval == 2) or (dayval == 22):
+		outcome = dl + "nd"
+	elif (dayval == 3) or (dayval == 23):
+		outcome = dl + "rd"
+	else:
+		outcome = dl + "th"
+
+	return outcome
+
+
+
+def gettwodigitvalue(dayormonthval):
+
+	outcome = str(dayormonthval)
+	if dayormonthval < 10:
+		outcome = "0" + outcome
+
+	return outcome

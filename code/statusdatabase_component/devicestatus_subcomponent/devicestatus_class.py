@@ -30,7 +30,7 @@ class DeviceStatus:
 			if oldstatus == False:
 				outcome = 1
 			else:
-				outcome = 0
+				outcome = -1
 		self.connectionstate[connectiontypestring] = connectionstateboolean
 		return outcome
 		
@@ -40,8 +40,6 @@ class DeviceStatus:
 
 		self.lastchanged.setfromobject(changedatetimeobject)
 		self.changereason = changereasoninteger
-
-		
 		
 
 
@@ -96,11 +94,38 @@ class DeviceStatus:
 	
 	def haschangedsince(self, baselinedatetimeobject):
 	
-		if DateTime.isfirstlaterthansecond(self.lastchanged, baselinedatetimeobject):
+		if DateTime.isfirstlaterthansecond(self.lastchanged, baselinedatetimeobject) == True:
 			outcome = True
 		else:
 			outcome = False
 	
+		return outcome
+
+
+
+	def getalertstatus(self, baselinedatetimeobject):
+
+		outcome = False
+		if self.getforcedalertstatus() == True:
+			outcome = True
+		else:
+			if self.haschangedsince(baselinedatetimeobject) == True:
+				outcome = True
+
+		return outcome
+
+
+
+	def getforcedalertstatus(self):
+
+		outcome = False
+		if self.devicecategory == "Expected":
+			if self.getconnectionstatus("Any") == False:
+				outcome = True
+		elif self.devicecategory == "Unexpected":
+			if self.getconnectionstatus("Any") == True:
+				outcome = True
+
 		return outcome
 
 
