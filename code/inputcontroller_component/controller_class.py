@@ -1,5 +1,4 @@
-from ..common_components import GUI
-
+from ..common_components import AppInput
 
 
 # ===========================================================================================================
@@ -12,8 +11,7 @@ class InputController:
 
 	def __init__(self):
 
-		# Specifies whether the user has requested to close the application in this cycle
-		self.quitstate = False
+		self.inputobject = AppInput.createappinput()
 
 
 
@@ -32,12 +30,8 @@ class InputController:
 		# Default to no valid input detected
 		outcome = False
 
-		# Loop over all events logged in this cycle
-		for event in GUI.event.get():
-
-			# Set quit game status if user closes the application window
-			if event.type == GUI.QUIT:
-				self.quitstate = True
+		# Process all inputs in the eventlist
+		self.inputobject.processinputs()
 
 		return outcome
 
@@ -53,5 +47,5 @@ class InputController:
 
 	def getquitstate(self):
 
-		return self.quitstate
+		return self.inputobject.getquitstate()
 
