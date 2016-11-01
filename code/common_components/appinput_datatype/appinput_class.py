@@ -13,24 +13,30 @@ class DefineApplicationInput:
 
 	def __init__(self):
 
-#		self.mouse = DefineMouseInformation()
-
-#		self.keys = DefineKeyboardInformation()
-
 		self.buttons = {}
 
 		self.quitstate = False
 
+		# The location the mouse is positioned at
+		# regardless of mouse click state
 		self.mouselocation = Vector.createfromvalues(-999, -999)
 
 		#self.mousesourcebutton = ""
 
+		# The current button/area that the mouse location is positioned over 
+		# regardless of mouse click state
 		self.mousecurrentbutton = ""
 
-		self.mousebuttonpressstate = False
+		# Flag to indicate if mouse button is pressed
+		#self.mousebuttonpressstate = False
 
+		# Flag to indicate if rest of application needs to process changes
+		# to the mouse
 		self.mouseaction = False
 
+		# Flag to indicate the current state of the mouse - Press / Release / Drag / Move
+		self.mousestate = "Move"
+		
 
 
 	# ==========================================================================================
@@ -105,6 +111,7 @@ class DefineApplicationInput:
 
 	def processmouse(self, event):
 
+		# Determine what kind of mouse action has occurred
 		if event.type == GUI.MOUSEMOTION:
 			action = "Move"
 		elif event.type == GUI.MOUSEBUTTONDOWN:
@@ -114,28 +121,47 @@ class DefineApplicationInput:
 		else:
 			action = "None"
 
+			
+		# Update the mouse position and action flags (if necessary)
+		self.updatemouseposition(action)
+
+		# Update the mouse state
+		self.updatemousestate(action)
+
+
+	# -------------------------------------------------------------------
+	# Update the mouse state
+	# -------------------------------------------------------------------
+
+	def updatemousestate(self, action):
+
+		oldmousestate = self.mousestate
+
+		# If the mouse is currently being pressed or released, press/release
+		if (action == "Press") or (action == "Release"):
+			self.mousestate = action
+		# If the mouse is currently being moved or not moved, drag/move based on previous state
+		else:
+			if (oldmousestate == "Press") or (oldmousestate == "Drag"):
+				self.mousestate = "Drag"
+			else:
+				self.mousestate = "Move"
+
+
+
+	# -------------------------------------------------------------------
+	# Update mouse position and action
+	# -------------------------------------------------------------------
+
+	def updatemouseposition(self, action):
+
+
 		if action == "None":
 			self.mouseaction = False
 		else:
 			self.mouseaction = True
 			self.mouselocation = Vector.createfrompair(event.pos)
-			if action == "Press":
-				currentbutton = self.getcurrentmousebutton()
-
-
-				self.mouse
-
-
-
-
-
-		elif action == "Release":
-
-		else:
-
-
-
-
+			self.mousecurrentbutton = self.getcurrentmousebutton()
 
 
 
@@ -143,7 +169,7 @@ class DefineApplicationInput:
 	# Set button or buttongroup state
 	# -------------------------------------------------------------------
 
-	def setbuttonstate(self, buttonname, newstate):
+	def setareastate(self, buttonname, newstate):
 
 		if buttonname in self.buttons:
 			self.buttons[buttonname].changestate(newstate)
@@ -153,11 +179,35 @@ class DefineApplicationInput:
 
 
 
+	# -------------------------------------------------------------------
+	# Set button dimensions
+	# -------------------------------------------------------------------
+
+	def setareadimensions(self, buttonname, newposition, newdimensions):
+
+		if buttonname in self.buttons:
+			self.buttons[buttonname].changeboundary(newposition, newdimensions)
+		else:
+			print "Invalid button name - ", buttonname
+
+
+
+	# -------------------------------------------------------------------
+	# Add a button
+	# -------------------------------------------------------------------
+
+	def createarea(self, buttonname, buttonposition, buttondimensions, buttongroupmembership):
+
+		if buttonname in self.buttons:
+			print "Duplicate button name - ", buttonname
+		else:
+			self.buttons[buttonname] = DefineButton(buttonposition, buttondimensions, buttongroupmembership)
+
+
+
 	# ==========================================================================================
 	# Get Information
 	# ==========================================================================================
-
-
 
 
 
@@ -175,9 +225,24 @@ class DefineApplicationInput:
 	# Returns which button the mouse is currently over
 	# -------------------------------------------------------------------
 
-	def getmousearea(self):
+	def getcurrentmousearea(self):
 
 		return self.mousecurrentbutton
+
+
+
+	# -------------------------------------------------------------------
+	# Returns the state of the button the mouse is currently over
+	# -------------------------------------------------------------------
+
+	def getcurrentmouseareastate(self):
+
+		if self.mousecurrentbutton = "":
+			outcome = ""
+		else
+			outcome = self.mousecurrentbutton.getstate()
+		
+		return outcome
 
 
 
@@ -192,6 +257,16 @@ class DefineApplicationInput:
 
 
 	# -------------------------------------------------------------------
+	# Returns what the current mouse state is
+	# -------------------------------------------------------------------
+
+	def getmousestate(self):
+
+		return self.mousestate
+
+
+
+	# -------------------------------------------------------------------
 	# Returns the location of the mouse
 	# -------------------------------------------------------------------
 
@@ -202,7 +277,18 @@ class DefineApplicationInput:
 
 
 	# -------------------------------------------------------------------
-	# Returns the current hovering button - INTERNAL FUNCTION
+	# Returns the state of the specified button
+	# -------------------------------------------------------------------
+
+	def getareastate(self, areaname):
+
+		return self.buttons[areaname].getstate()
+
+
+
+	# -------------------------------------------------------------------
+	# Returns the current hovering button         - INTERNAL FUNCTION
+	# Regardless of button state
 	# -------------------------------------------------------------------
 
 	def getcurrentmousebutton(self):
@@ -212,3 +298,4 @@ class DefineApplicationInput:
 			if button.gethoverstate(self.mouseposition) != "":
 				outcome = buttonname
 		return outcome
+	
