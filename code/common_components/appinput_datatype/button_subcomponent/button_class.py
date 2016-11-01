@@ -30,12 +30,22 @@ class DefineButton:
 	# Perform Actions
 	# ==========================================================================================
 
+
+
+	# -------------------------------------------------------------------
+	# Change a button's boundary
+	# -------------------------------------------------------------------
+	
 	def changeboundary(self, newposition, newdimensions):
 
 		self.position = newposition
 		self.dimensions = newdimensions
 
 
+
+	# -------------------------------------------------------------------
+	# Change a button's state
+	# -------------------------------------------------------------------
 
 	def changestate(self, newstate):
 
@@ -44,6 +54,10 @@ class DefineButton:
 		else:
 			print "Invalid button state - ", newstate
 
+
+	# -------------------------------------------------------------------
+	# Change multiple button states
+	# -------------------------------------------------------------------
 
 	def changegroupstate(self, groupname, newstate):
 
@@ -57,11 +71,22 @@ class DefineButton:
 	# Get Information
 	# ==========================================================================================
 
+
+
+	# -------------------------------------------------------------------
+	# Returns the state of the button
+	# -------------------------------------------------------------------
+
 	def getstate(self):
 
 		return self.state
 
 
+
+	# -------------------------------------------------------------------
+	# Returns whether the specified location is in the button boundary
+	# and if so, returns the state
+	# -------------------------------------------------------------------
 
 	def gethoverstate(self, mouseposition):
 
