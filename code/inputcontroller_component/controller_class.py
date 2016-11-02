@@ -14,6 +14,8 @@ class InputController:
 		self.inputobject = AppInput.createappinput()
 		self.setupbuttons()
 
+
+
 	def setupbuttons(self):
 
 		self.definebutton("shift",   0,   0,    80,    40, ["keyboard"])
@@ -50,7 +52,6 @@ class InputController:
 		self.definebutton("o",      80, 360,    40,    40, ["keyboard"])
 		self.definebutton("p",      80, 400,    40,    40, ["keyboard"])
 		self.definebutton("enter2", 40, 440,    40,    40, ["keyboard"])
-
 
 
 

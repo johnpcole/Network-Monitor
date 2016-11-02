@@ -68,7 +68,7 @@ class DefineApplicationInput:
 
 
 	# -------------------------------------------------------------------
-	# Process keyboard
+	# Process quit
 	# -------------------------------------------------------------------
 
 	def processquit(self, event):
@@ -121,9 +121,8 @@ class DefineApplicationInput:
 		else:
 			action = "None"
 
-			
 		# Update the mouse position and action flags (if necessary)
-		self.updatemouseposition(action)
+		self.updatemouseposition(action, event)
 
 		# Update the mouse state
 		self.updatemousestate(action)
@@ -153,7 +152,7 @@ class DefineApplicationInput:
 	# Update mouse position and action
 	# -------------------------------------------------------------------
 
-	def updatemouseposition(self, action):
+	def updatemouseposition(self, action, event):
 
 
 		if action == "None":
@@ -237,10 +236,10 @@ class DefineApplicationInput:
 
 	def getcurrentmouseareastate(self):
 
-		if self.mousecurrentbutton = "":
+		if self.mousecurrentbutton == "":
 			outcome = ""
-		else
-			outcome = self.mousecurrentbutton.getstate()
+		else:
+			outcome = self.getareastate(self.mousecurrentbutton)
 		
 		return outcome
 
@@ -294,8 +293,8 @@ class DefineApplicationInput:
 	def getcurrentmousebutton(self):
 
 		outcome = ""
-		for buttonname, button in self.buttons:
-			if button.gethoverstate(self.mouseposition) != "":
+		for buttonname in self.buttons.keys():
+			if self.buttons[buttonname].gethoverstate(self.mouselocation) != "":
 				outcome = buttonname
 		return outcome
 	
