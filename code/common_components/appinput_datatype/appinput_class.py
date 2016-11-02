@@ -21,21 +21,16 @@ class DefineApplicationInput:
 		# regardless of mouse click state
 		self.mouselocation = Vector.createfromvalues(-999, -999)
 
-		#self.mousesourcebutton = ""
-
-		# The current button/area that the mouse location is positioned over 
+		# The current button/area that the mouse location is positioned over
 		# regardless of mouse click state
 		self.mousecurrentbutton = ""
-
-		# Flag to indicate if mouse button is pressed
-		#self.mousebuttonpressstate = False
 
 		# Flag to indicate if rest of application needs to process changes
 		# to the mouse
 		self.mouseaction = False
 
-		# Flag to indicate the current state of the mouse - Press / Release / Drag / Move
-		self.mousestate = "Move"
+		# Flag to indicate the current state of the mouse - 1) Press, -1) Release, 0) Drag & Move
+		self.mouseclickaction = 0
 		
 
 
@@ -51,6 +46,9 @@ class DefineApplicationInput:
 
 	def processinputs(self):
 
+		# Default to there being no mouse actions in this cycle
+		self.preparemouse()
+
 		# Loop over all events logged in this cycle
 		for event in GUI.event.get():
 
@@ -58,10 +56,12 @@ class DefineApplicationInput:
 			self.processquit(event)
 
 			# Process keyboard actions
-			self.processkey(event)
+			#self.processkey(event)
 
 			# Process mouse actions
 			self.processmouse(event)
+
+
 
 		return 0
 
@@ -106,6 +106,17 @@ class DefineApplicationInput:
 
 
 	# -------------------------------------------------------------------
+	# Prepare Mouse states for this cycle
+	# -------------------------------------------------------------------
+
+	def preparemouse(self):
+
+		self.mouseaction = False
+		self.mouseclickaction = 0
+
+
+
+	# -------------------------------------------------------------------
 	# Process mouse
 	# -------------------------------------------------------------------
 
@@ -116,51 +127,27 @@ class DefineApplicationInput:
 			action = "Move"
 		elif event.type == GUI.MOUSEBUTTONDOWN:
 			action = "Press"
+			self.mouseclickaction = +1
 		elif event.type == GUI.MOUSEBUTTONUP:
 			action = "Release"
+			self.mouseclickaction = -1
 		else:
 			action = "None"
 
-		# Update the mouse position and action flags (if necessary)
-		self.updatemouseposition(action, event)
-
-		# Update the mouse state
-		self.updatemousestate(action)
-
-
-	# -------------------------------------------------------------------
-	# Update the mouse state
-	# -------------------------------------------------------------------
-
-	def updatemousestate(self, action):
-
-		oldmousestate = self.mousestate
-
-		# If the mouse is currently being pressed or released, press/release
-		if (action == "Press") or (action == "Release"):
-			self.mousestate = action
-		# If the mouse is currently being moved or not moved, drag/move based on previous state
-		else:
-			if (oldmousestate == "Press") or (oldmousestate == "Drag"):
-				self.mousestate = "Drag"
-			else:
-				self.mousestate = "Move"
-
-
-
-	# -------------------------------------------------------------------
-	# Update mouse position and action
-	# -------------------------------------------------------------------
-
-	def updatemouseposition(self, action, event):
-
-
-		if action == "None":
-			self.mouseaction = False
-		else:
+		if action != "None":
+			self.updatemouseposition(event.pos)
 			self.mouseaction = True
-			self.mouselocation = Vector.createfrompair(event.pos)
-			self.mousecurrentbutton = self.getcurrentmousebutton()
+
+
+
+	# -------------------------------------------------------------------
+	# Update mouse position and current hover button - INTERNAL FUNCTION ONLY
+	# -------------------------------------------------------------------
+
+	def updatemouseposition(self, locationpair):
+
+		self.mouselocation = Vector.createfrompair(locationpair)
+		self.mousecurrentbutton = self.getcurrentmousebutton()
 
 
 
@@ -173,8 +160,8 @@ class DefineApplicationInput:
 		if buttonname in self.buttons:
 			self.buttons[buttonname].changestate(newstate)
 		else:
-			for button in self.buttons:
-				button.changegroupstate(buttonname, newstate)
+			for individualbuttonname in self.buttons.keys():
+				self.buttons[individualbuttonname].changegroupstate(buttonname, newstate)
 
 
 
@@ -246,7 +233,7 @@ class DefineApplicationInput:
 
 
 	# -------------------------------------------------------------------
-	# Returns whether a mouse action has occured
+	# Returns whether a mouse action has occurred
 	# -------------------------------------------------------------------
 
 	def getmouseaction(self):
@@ -259,9 +246,9 @@ class DefineApplicationInput:
 	# Returns what the current mouse state is
 	# -------------------------------------------------------------------
 
-	def getmousestate(self):
+	def getmouseclickaction(self):
 
-		return self.mousestate
+		return self.mouseclickaction
 
 
 
@@ -287,14 +274,20 @@ class DefineApplicationInput:
 
 	# -------------------------------------------------------------------
 	# Returns the current hovering button         - INTERNAL FUNCTION
-	# Regardless of button state
+	# But only if the button is NOT hidden
 	# -------------------------------------------------------------------
 
 	def getcurrentmousebutton(self):
 
 		outcome = ""
+		checkcount = 0
 		for buttonname in self.buttons.keys():
 			if self.buttons[buttonname].gethoverstate(self.mouselocation) != "":
-				outcome = buttonname
+				if self.buttons[buttonname].getstate() != "Hidden":
+					outcome = buttonname
+					checkcount = checkcount + 1
+		if checkcount > 1:
+			outcome = "! Multiple Buttons !"
+			print "Multiple visible buttons present at hover location"
 		return outcome
 	
