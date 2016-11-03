@@ -226,7 +226,7 @@ class DefineApplicationInput:
 		if self.mousecurrentbutton == "":
 			outcome = ""
 		else:
-			outcome = self.getareastate(self.mousecurrentbutton)
+			outcome = self.buttons[self.mousecurrentbutton].getstate()
 		
 		return outcome
 
@@ -263,16 +263,6 @@ class DefineApplicationInput:
 
 
 	# -------------------------------------------------------------------
-	# Returns the state of the specified button
-	# -------------------------------------------------------------------
-
-	def getareastate(self, areaname):
-
-		return self.buttons[areaname].getstate()
-
-
-
-	# -------------------------------------------------------------------
 	# Returns the current hovering button         - INTERNAL FUNCTION
 	# But only if the button is NOT hidden
 	# -------------------------------------------------------------------
@@ -290,4 +280,40 @@ class DefineApplicationInput:
 			outcome = "! Multiple Buttons !"
 			print "Multiple visible buttons present at hover location"
 		return outcome
-	
+
+
+
+	# -------------------------------------------------------------------
+	# Returns the set of buttons in a group
+	# If nothing specified, all buttons are returned
+	# -------------------------------------------------------------------
+
+	def getbuttoncollection(self, groupname):
+
+		outcome = []
+
+		if groupname == "":
+			for buttonname in self.buttons.keys():
+				outcome.append(buttonname)
+
+		else:
+			for buttonname in self.buttons.keys():
+				if self.buttons[buttonname].isingroup(groupname) == True:
+					outcome.append(buttonname)
+
+		return outcome
+
+
+
+	# -------------------------------------------------------------------
+	# Returns the actual button object for the specified button name
+	# -------------------------------------------------------------------
+
+	def getbuttonobject(self, buttonname):
+
+		outcome = None
+
+		if buttonname in self.buttons:
+			outcome = self.buttons[buttonname]
+
+		return outcome
