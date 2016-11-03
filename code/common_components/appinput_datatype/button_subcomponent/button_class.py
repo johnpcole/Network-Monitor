@@ -99,4 +99,39 @@ class DefineButton:
 
 
 
+	# -------------------------------------------------------------------
+	# Returns whether a button is part of the specified group
+	# -------------------------------------------------------------------
+
+	def isingroup(self, groupname):
+
+		outcome = False
+
+		for groupitem in self.groups:
+			if groupitem == groupname:
+				outcome = True
+
+		return outcome
+
+
+
+	# -------------------------------------------------------------------
+	# Returns the position of the button
+	# -------------------------------------------------------------------
+
+	def getposition(self):
+
+		return self.position
+
+
+	# -------------------------------------------------------------------
+	# Returns the dimensions of the button
+	# -------------------------------------------------------------------
+
+	def getdimensions(self):
+
+		return self.dimensions
+
+
+
 
