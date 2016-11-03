@@ -48,7 +48,7 @@ class DisplayDriver:
 # Is run every cycle
 # ---------------------------------------------------------
 
-	def rundisplayoutputservice(self, statusdatabaseobject):
+	def rundisplayoutputservice(self, statusdatabaseobject, inputcontrollerobject):
 
 		# Determine whether to bother to update the display
 		if self.cycledisplay() == True:
@@ -61,6 +61,9 @@ class DisplayDriver:
 
 			# Refresh the banner area
 			self.refreshbanner(statusdatabaseobject)
+
+			# Refresh the buttons
+			self.refreshbuttons(inputcontrollerobject)
 
 			# Refresh the screen
 			self.appwindow.refreshscreen()
@@ -235,6 +238,10 @@ class DisplayDriver:
 
 
 
+	# -------------------------------------------------------------------
+	# Draws a device tile
+	# -------------------------------------------------------------------
+
 	def drawdevicetile(self, devicecounter, statusobject, devicetotal):
 
 		# Get the tile type, Narrow or Wide
@@ -263,12 +270,20 @@ class DisplayDriver:
 
 
 
+	# -------------------------------------------------------------------
+	# Draws a banner icon
+	# -------------------------------------------------------------------
+
 	def drawbannericon(self, icontype, iconcolour):
 
 		iconposition = DisplayFunction.bannerposition(self.currentmessageposition, 0)
 		self.appwindow.printicon(icontype, iconposition, iconcolour)
 
 
+
+	# -------------------------------------------------------------------
+	# Draws a device icon
+	# -------------------------------------------------------------------
 
 	def drawdeviceicon(self, devicecounter, statusobject, devicetotal, tiletype, tilecolour):
 
@@ -277,6 +292,10 @@ class DisplayDriver:
 		self.appwindow.printicon(statusobject.getimage(), iconposition, tilecolour + tileshade)
 
 
+
+	# -------------------------------------------------------------------
+	# Draws a port icon
+	# -------------------------------------------------------------------
 
 	def drawporticons(self, devicecounter, statusobject, devicetotal, tilecolour):
 	
@@ -290,6 +309,10 @@ class DisplayDriver:
 
 
 
+	# -------------------------------------------------------------------
+	# Draws the box around each device
+	# -------------------------------------------------------------------
+
 	def drawalertbox(self, devicecounter, statusobject, devicetotal, tiletype, tilecolour):
 
 		boxposition = DisplayFunction.itemposition(tiletype, devicecounter, -1, devicetotal)
@@ -301,6 +324,30 @@ class DisplayDriver:
 																							tilecolour + " - Dark"), 1)
 		else:
 			self.appwindow.printbox(boxposition, boxsize, tilecolour + " - Dark", 1)
+
+	# -------------------------------------------------------------------
+	# Refreshes the display of all buttons
+	# -------------------------------------------------------------------
+
+	def refreshbuttons(self, inputcontrollerobject):
+
+		buttonlist = inputcontrollerobject.getbuttoncollection("keyboard")
+
+		for buttonname in buttonlist:
+			buttonobject = inputcontrollerobject.getbuttonobject(buttonname)
+			if buttonobject.getstate() != "Disabled":
+				self.appwindow.printbox(buttonobject.getposition(), buttonobject.getdimensions(), "Black", 0)
+				self.appwindow.printbox(buttonobject.getposition(), buttonobject.getdimensions(), "White", 1)
+
+
+
+
+
+
+
+
+
+
 
 
 
