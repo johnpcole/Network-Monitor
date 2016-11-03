@@ -37,7 +37,7 @@ def runapplication():
 
 		statusdatabase.rundatabaseupdateservice(devicedatabase)
 
-		displaydriver.rundisplayoutputservice(statusdatabase)
+		displaydriver.rundisplayoutputservice(statusdatabase, inputcontroller)
 
 
 
