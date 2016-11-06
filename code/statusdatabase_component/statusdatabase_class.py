@@ -1,7 +1,7 @@
-from devicestatus_subcomponent import DeviceStatus
-from ..common_components import DateTime
-from ..common_components import File
-import reporting_privatefunctions as ReportingFunction
+from devicestatus_subcomponent import devicestatus_module as DeviceStatus
+from ..common_components.datetime_datatypes import datetime_module as DateTime
+from ..common_components.fileprocessing_framework import fileprocessing_module as File
+from . import reporting_privatefunctions as ReportingFunction
 
 
 
@@ -10,7 +10,7 @@ import reporting_privatefunctions as ReportingFunction
 # last update time. The database refreshes by being passed a list of addresses resulting from a scan.
 # ===========================================================================================================
 
-class StatusDatabase:
+class DefineStatusDatabase:
 	
 	
 	
@@ -104,7 +104,7 @@ class StatusDatabase:
 		# Look for the device with the specified name
 		# If there is no existing device with that name, add a new device
 		if self.getstatusdevicebyname(devicenamestring) is None:
-			self.statusdevices.append(DeviceStatus(devicenamestring, imagenamestring, devicecategorystring))
+			self.statusdevices.append(DeviceStatus.createstatus(devicenamestring, imagenamestring, devicecategorystring))
 			outcome = True
 
 		# If there is already and existing device with that name, print an error

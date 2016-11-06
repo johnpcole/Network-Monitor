@@ -1,11 +1,11 @@
-from ...common_components import MacAddress
-from ...common_components import IPAddress
+from ...common_components.networkaddress_datatypes import macaddress_module as MacAddress
+from ...common_components.networkaddress_datatypes import ipaddress_module as IPAddress
 
 # ===========================================================================================================
 # This class captures each item returned from the network scan.
 # ===========================================================================================================
 
-class ScannedItem:
+class DefineScannedItem:
 
 	def __init__(self, macaddressstring, ipaddressstring):
 		

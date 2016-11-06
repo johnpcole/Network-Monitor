@@ -1,6 +1,6 @@
-from ....common_components import MacAddress
-from ....common_components import IPAddress
-from ....common_components import DateTime
+from ....common_components.networkaddress_datatypes import macaddress_module as MacAddress
+from ....common_components.networkaddress_datatypes import ipaddress_module as IPAddress
+from ....common_components.datetime_datatypes import datetime_module as DateTime
 
 
 
@@ -8,7 +8,7 @@ from ....common_components import DateTime
 # This class captures each port on devices.
 # ===========================================================================================================
 
-class MonitoredPort:
+class DefineMonitoredPort:
 
 	def __init__(self, macaddressobject, porttypestring):
 		

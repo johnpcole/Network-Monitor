@@ -1,4 +1,4 @@
-class DisplayMessage:
+class DefineDisplayMessage:
 
 	def __init__(self, devicename, indexvalue, changereason, messagetype):
 

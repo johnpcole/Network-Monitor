@@ -1,6 +1,6 @@
-from priorityitem_subcomponent import PriorityItem
-from alertitem_subcomponent import AlertItem
-from ..common_components import DateTime
+from priorityitem_subcomponent import priorityitem_module as PriorityItem
+from alertitem_subcomponent import alertitem_module as AlertItem
+from ..common_components.datetime_datatypes import datetime_module as DateTime
 import operator as ListFunction
 
 
@@ -79,7 +79,8 @@ def populatenamelists(statusdevicelist):
 		
 		datelastchanged = DateTime.secondsdifference(currentdatetime, statusdevice.getlastchangeddate())
 		
-		prioritylist[prioritylistname].append(PriorityItem(statusdevice.getname(), datelastchanged.getsecondsvalue()))
+		prioritylist[prioritylistname].append(PriorityItem.createitem(statusdevice.getname(),
+																					datelastchanged.getsecondsvalue()))
 		
 	return prioritylist
 
@@ -116,6 +117,6 @@ def getalertitems(statusdevicelist, datetimethreshold):
 				alerttype = "alert"
 			else:
 				alerttype = "info"
-			outcome.append(AlertItem(device.getname(), device.getchangereason(), alerttype))
+			outcome.append(AlertItem.createitem(device.getname(), device.getchangereason(), alerttype))
 
 	return outcome

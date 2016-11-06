@@ -1,4 +1,4 @@
-import networkaddressing_privatefunctions as AddressFunction
+from . import networkaddressing_privatefunctions as AddressFunction
 
 # ===========================================================================================================
 # This class captures each device and its ports within a single object.

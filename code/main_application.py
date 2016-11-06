@@ -1,9 +1,9 @@
-from statusdatabase_component import StatusDatabase
-from devicedatabase_component import DeviceDatabase
-from networkscanner_component import NetworkScanner
-from inputcontroller_component import InputController
-from outputdisplay_component import DisplayDriver
-from common_components import GUI
+from statusdatabase_component import statusdatabase_module as StatusDatabase
+from devicedatabase_component import devicedatabase_module as DeviceDatabase
+from networkscanner_component import scanner_module as NetworkScanner
+from inputcontroller_component import controller_module as InputController
+from outputdisplay_component import display_module as DisplayDriver
+from common_components.userinterface_framework import userinterface_module as GUI
 
 
 def runapplication():
@@ -16,11 +16,11 @@ def runapplication():
 	# Define objects used to drive application                                     #
 	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
-	devicedatabase = DeviceDatabase()
-	statusdatabase = StatusDatabase()
-	networkscanner = NetworkScanner()
-	inputcontroller = InputController()
-	displaydriver = DisplayDriver()
+	devicedatabase = DeviceDatabase.createdatabase()
+	statusdatabase = StatusDatabase.createdatabase()
+	networkscanner = NetworkScanner.createscanner()
+	inputcontroller = InputController.createcontroller()
+	displaydriver = DisplayDriver.createdisplay()
 
 	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 	# Run the application, processing each service in turn                         #

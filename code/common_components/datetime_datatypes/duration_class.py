@@ -1,4 +1,4 @@
-import duration_privatefunctions as DurationFunction
+from . import duration_privatefunctions as DurationFunction
 
 # ===========================================================================================================
 # This class captures all datetime-durations in seconds.

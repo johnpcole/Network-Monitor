@@ -1,4 +1,4 @@
-import time_privatefunctions as TimeFunction
+from . import time_privatefunctions as TimeFunction
 
 # ===========================================================================================================
 # This class captures all times. It is not meant to be used directly by programs, but called via the

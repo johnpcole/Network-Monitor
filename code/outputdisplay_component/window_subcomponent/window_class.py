@@ -1,5 +1,5 @@
-from ...common_components import AppDisplay
-from ...common_components import Vector
+from ...common_components.appdisplay_framework import appdisplay_module as AppDisplay
+from ...common_components.vector_datatype import vector_module as Vector
 
 
 
@@ -7,7 +7,7 @@ from ...common_components import Vector
 # This class drives the application display
 # ===========================================================================================================
 
-class Window:
+class DefineWindow:
 
 
 
@@ -17,7 +17,7 @@ class Window:
 		self.windowsize = Vector.createfromvalues(480, 320)
 
 		# Sets up pygame window related properties & methods and loads images, fonts and colours
-		self.windowobject = AppDisplay.createappwindow(self.windowsize, "Network Monitor")
+		self.windowobject = AppDisplay.createwindow(self.windowsize, "Network Monitor")
 		self.imagesize = {}
 		self.setupimages()
 		self.setupfonts()

@@ -1,15 +1,15 @@
-from scanneditems_subcomponent import ScannedItem
-from ..common_components import DateTime
-from ..common_components import Duration
-from ..common_components import File
-from ..common_components import Terminal
+from scanneditems_subcomponent import scanneditem_module as ScannedItem
+from ..common_components.datetime_datatypes import datetime_module as DateTime
+from ..common_components.datetime_datatypes import duration_module as Duration
+from ..common_components.fileprocessing_framework import fileprocessing_module as File
+from ..common_components.terminalinterface_framework import terminalinterface_module as Terminal
 
 # ===========================================================================================================
 # This class performs a network scan (interfacing with the OS), and
 # captures all items returned from the network scan.
 # ===========================================================================================================
 
-class NetworkScanner:
+class DefineNetworkScanner:
 	
 	
 	
@@ -113,7 +113,7 @@ class NetworkScanner:
 
 	def addscanneditem(self, macaddressstring, ipaddressstring):
 
-		self.scanresults.append(ScannedItem(macaddressstring, ipaddressstring))
+		self.scanresults.append(ScannedItem.createitem(macaddressstring, ipaddressstring))
 
 		
 		

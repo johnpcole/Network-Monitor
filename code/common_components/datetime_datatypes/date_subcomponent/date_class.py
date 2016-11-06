@@ -1,4 +1,4 @@
-import date_privatefunctions as DateFunction
+from . import date_privatefunctions as DateFunction
 
 # ===========================================================================================================
 # This class captures all dates. It is not meant to be used directly by programs, but called via the

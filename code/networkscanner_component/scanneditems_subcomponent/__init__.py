@@ -1,1 +1,0 @@
-from scanneditem_class import ScannedItem

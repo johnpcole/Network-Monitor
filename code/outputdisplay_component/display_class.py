@@ -1,7 +1,7 @@
-from window_subcomponent import Window
-import display_privatefunctions as DisplayFunction
-from ..common_components import DateTime
-from messagelist_subcomponent import MessageList
+from window_subcomponent import window_module as Window
+from messagelist_subcomponent import messagelist_module as MessageList
+from . import display_privatefunctions as DisplayFunction
+from ..common_components.datetime_datatypes import datetime_module as DateTime
 
 
 
@@ -9,14 +9,14 @@ from messagelist_subcomponent import MessageList
 # This class drives the application display
 # ===========================================================================================================
 
-class DisplayDriver:
+class DefineDisplayDriver:
 
 
 
 	def __init__(self):
 
 		# Sets up pygame window related properties & methods and loads images, fonts and colours
-		self.appwindow = Window()
+		self.appwindow = Window.createwindow()
 		self.lastscreenupdate = -999
 
 		# Current date time
@@ -24,7 +24,7 @@ class DisplayDriver:
 		self.datetimestring = ""
 
 		# Messages List
-		self.messages = MessageList()
+		self.messages = MessageList.createlist()
 		self.currentmessageposition = 0
 		self.currentmessagetext = "Monitor Starting..."
 		self.messagewidth = self.appwindow.gettextwidth(self.currentmessagetext, "Banner Text")

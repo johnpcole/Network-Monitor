@@ -1,4 +1,4 @@
-from code import NetworkMonitor
+from code import main_application as NetworkMonitor
 
 
 print "Application Started"

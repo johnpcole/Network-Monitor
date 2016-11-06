@@ -1,4 +1,4 @@
-from ...common_components import DateTime
+from ...common_components.datetime_datatypes import datetime_module as DateTime
 
 
 
@@ -6,7 +6,7 @@ from ...common_components import DateTime
 # This class captures the status of an individual device
 # ===========================================================================================================
 
-class DeviceStatus:
+class DefineDeviceStatus:
 
 	def __init__(self, devicenamestring, imagenamestring, devicecategorystring):
 

@@ -1,7 +1,7 @@
-from device_subcomponent import Device
-from ..common_components import DateTime
-from ..common_components import File
-from ..common_components import MacAddress
+from device_subcomponent import device_module as Device
+from ..common_components.datetime_datatypes import datetime_module as DateTime
+from ..common_components.fileprocessing_framework import fileprocessing_module as File
+from ..common_components.networkaddress_datatypes import macaddress_module as MacAddress
 
 
 
@@ -10,7 +10,7 @@ from ..common_components import MacAddress
 # last update time. The database refreshes by being passed a list of addresses resulting from a scan.
 # ===========================================================================================================
 
-class DeviceDatabase:
+class DefineDeviceDatabase:
 	
 	
 	
@@ -168,7 +168,7 @@ class DeviceDatabase:
 		# Look for the device with the specified name
 		# If there is no existing device with that name, add a new device
 		if self.getdevicebyname(devicenamestring) is None:
-			self.devices.append(Device(devicenamestring))
+			self.devices.append(Device.createdevice(devicenamestring))
 			outcome = True
 
 		# If there is already and existing device with that name, print an error

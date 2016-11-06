@@ -1,7 +1,7 @@
-from ..common_components import Vector
-import narrowtile_privatefunctions as NarrowTileFunction
-import widetile_privatefunctions as WideTileFunction
-from ..common_components import DateTime
+from ..common_components.vector_datatype import vector_module as Vector
+from . import narrowtile_privatefunctions as NarrowTileFunction
+from . import widetile_privatefunctions as WideTileFunction
+from ..common_components.datetime_datatypes import datetime_module as DateTime
 
 
 

@@ -1,6 +1,6 @@
-from date_subcomponent import Date
-from time_subcomponent import Time
-import datetime_privatefunctions as DateTimeFunction
+from date_subcomponent import date_module as Date
+from time_subcomponent import time_module as Time
+from . import datetime_privatefunctions as DateTimeFunction
 
 # ===========================================================================================================
 # This class captures all date-time combinations. It should be used even when just a date or time are

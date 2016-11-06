@@ -1,7 +1,7 @@
-from message_subcomponent import DisplayMessage
+from message_subcomponent import message_module as DisplayMessage
 
 
-class MessageList:
+class DefineMessageList:
 
 	def __init__(self):
 
@@ -46,7 +46,8 @@ class MessageList:
 		devicesearch = self.getmessagefromcombo(devicename, changereason)
 
 		if devicesearch is None:
-			self.messages.append(DisplayMessage(devicename, 1 + self.getmessagecount(), changereason, messagetype))
+			self.messages.append(DisplayMessage.createmessage(devicename, 1 + self.getmessagecount(), changereason,
+																										messagetype))
 			if self.getmessagecount() == 1:
 				self.currentmessage = 1
 

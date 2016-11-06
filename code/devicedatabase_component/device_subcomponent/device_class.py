@@ -1,5 +1,5 @@
-from port_subcomponent import MonitoredPort
-from ...common_components import DateTime
+from port_subcomponent import port_module as MonitoredPort
+from ...common_components.datetime_datatypes import datetime_module as DateTime
 
 
 
@@ -7,7 +7,7 @@ from ...common_components import DateTime
 # This class captures each device and its ports within a single object.
 # ===========================================================================================================
 
-class Device:
+class DefineDevice:
 
 	def __init__(self, devicenamestring):
 		
@@ -34,7 +34,7 @@ class Device:
 		# Look for any existing port_subcomponent with the specified MAC Address
 		# If there is no existing port, add one to the device
 		if self.matchdevicebymacaddress(macaddressobject) == False:
-			self.ports.append(MonitoredPort(macaddressobject, porttypestring))
+			self.ports.append(MonitoredPort.createport(macaddressobject, porttypestring))
 			outcome = True
 		
 		# If there is an existing port, print an error

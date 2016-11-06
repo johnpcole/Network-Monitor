@@ -1,11 +1,11 @@
-from ..common_components import AppInput
-from ..common_components import Vector
+from ..common_components.appinput_framework import appinput_module as AppInput
+from ..common_components.vector_datatype import vector_module as Vector
 
 # ===========================================================================================================
 # This class captures all user inputs using pygame.
 # ===========================================================================================================
 
-class InputController:
+class DefineInputController:
 
 
 
