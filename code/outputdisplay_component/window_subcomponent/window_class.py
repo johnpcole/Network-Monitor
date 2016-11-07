@@ -97,7 +97,7 @@ class DefineWindow:
 	def refreshscreen(self):
 
 		self.windowobject.updatescreen()
-		self.windowobject.drawbox(Vector.createfromvalues(0, 0), self.windowsize, "Black")
+		self.windowobject.drawrectangle(Vector.createfromvalues(0, 0), self.windowsize, "Black", "", 0)
 
 
 
@@ -109,7 +109,7 @@ class DefineWindow:
 
 		iconname = iconlabel.lower()
 		if colourlabel != "None":
-			self.windowobject.drawbox(positioncoordinates, self.geticonsize(iconname), colourlabel)
+			self.windowobject.drawrectangle(positioncoordinates, self.geticonsize(iconname), colourlabel, "", 0)
 		self.windowobject.drawimage(iconname, positioncoordinates)
 
 
@@ -129,7 +129,7 @@ class DefineWindow:
 
 	def printbox(self, topleftvector, dimensionsvector, colourlabel, thickness):
 		
-		self.windowobject.drawboxoutline(topleftvector, dimensionsvector, colourlabel, thickness)
+		self.windowobject.drawrectangle(topleftvector, dimensionsvector, "", colourlabel, thickness)
 
 
 
