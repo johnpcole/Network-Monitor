@@ -334,10 +334,11 @@ class DefineDisplayDriver:
 		buttonlist = inputcontrollerobject.getbuttoncollection("keyboard")
 
 		for buttonname in buttonlist:
-			buttonobject = inputcontrollerobject.getbuttonobject(buttonname)
-			if buttonobject.getstate() != "Disabled":
-				self.appwindow.printbox(buttonobject.getposition(), buttonobject.getdimensions(), "Black", 0)
-				self.appwindow.printbox(buttonobject.getposition(), buttonobject.getdimensions(), "White", 1)
+			if inputcontrollerobject.getbuttonstate(buttonname) != "Disabled":
+				buttonposition = inputcontrollerobject.getbuttonposition(buttonname)
+				buttonsize = inputcontrollerobject.getbuttonsize(buttonname)
+				self.appwindow.printbox(buttonposition, buttonsize, "Black", 0)
+				self.appwindow.printbox(buttonposition, buttonsize, "White", 1)
 
 
 
