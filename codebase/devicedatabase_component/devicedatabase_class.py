@@ -188,7 +188,7 @@ class DefineDeviceDatabase:
 	def addknowndevices(self):
 	
 		# Get the scan results from the file
-		knowndeviceslist = File.readfromdisk("database/knowndevices.txt")
+		knowndeviceslist = File.readfromdisk(File.concatenatepaths("database", "knowndevices.txt"))
 
 		# Loop over all lines in the file
 		for deviceline in knowndeviceslist:

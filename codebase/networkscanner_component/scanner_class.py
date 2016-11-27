@@ -91,7 +91,7 @@ class DefineNetworkScanner:
 	def collatescanresults(self):
 
 		# Get the scan results from the file
-		scanresults = File.readfromdisk("cache/scanresults.txt")
+		scanresults = File.readfromdisk(File.concatenatepaths("cache", "scanresults.txt"))
 
 		# Loop over all lines in the file
 		for scanline in scanresults:
