@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd /home/$USER/Python/Network_Monitor
+cd /home/$USER/Python_Applications/Network-Monitor
 python Network_Monitor.py
