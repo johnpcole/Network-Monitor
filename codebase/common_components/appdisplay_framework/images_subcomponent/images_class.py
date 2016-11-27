@@ -1,5 +1,5 @@
-from ...userinterface_framework import userinterface_module as GUI
-from ...fileprocessing_framework import fileprocessing_module as File
+from ....common_components.userinterface_framework import userinterface_module as GUI
+from ....common_components.fileprocessing_framework import fileprocessing_module as File
 
 
 class DefineImageLibrary:

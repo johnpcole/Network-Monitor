@@ -59,9 +59,9 @@ class DefineWindow:
 
 	def setupfonts(self):
 
-		self.windowobject.addfont("Unknown Device Label", "graphics/gillsanscondensed.ttf", 30)
-		self.windowobject.addfont("Clock Text", "graphics/gillsansnormal.ttf", 68)
-		self.windowobject.addfont("Banner Text", "graphics/gillsansnormal.ttf", 72)
+		self.windowobject.addfont("Unknown Device Label", "", "gillsanscondensed", 30)
+		self.windowobject.addfont("Clock Text", "", "gillsansnormal", 68)
+		self.windowobject.addfont("Banner Text", "", "gillsansnormal", 72)
 
 
 
