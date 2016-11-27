@@ -1,5 +1,5 @@
 from . import appdisplay_class as AppWindowClass
-
+from ..vector_datatype import vector_module as Vector
 
 
 # ---------------------------------------------
@@ -7,9 +7,9 @@ from . import appdisplay_class as AppWindowClass
 # ---------------------------------------------
 
 def createwindow(windowsize, windowtitle):
-	return AppWindowClass.DefineApplicationWindow(windowsize, windowtitle, False)
+	return AppWindowClass.DefineApplicationWindow(windowsize, windowtitle)
 
 
 
-def createfullscreenwindow(windowsize, windowtitle):
-	return AppWindowClass.DefineApplicationWindow(windowsize, windowtitle, True)
+def createfullscreendisplay(windowtitle):
+	return AppWindowClass.DefineApplicationWindow(Vector.createorigin(), windowtitle)

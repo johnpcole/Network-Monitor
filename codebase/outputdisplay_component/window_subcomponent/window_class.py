@@ -17,7 +17,7 @@ class DefineWindow:
 		self.windowsize = Vector.createfromvalues(480, 320)
 
 		# Sets up pygame window related properties & methods and loads images, fonts and colours
-		self.windowobject = AppDisplay.createfullscreenwindow(self.windowsize, "Network Monitor")
+		self.windowobject = AppDisplay.createfullscreendisplay("Network Monitor")
 		self.imagesize = {}
 		self.setupimages()
 		self.setupfonts()
