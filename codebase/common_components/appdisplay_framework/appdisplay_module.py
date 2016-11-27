@@ -7,5 +7,9 @@ from . import appdisplay_class as AppWindowClass
 # ---------------------------------------------
 
 def createwindow(windowsize, windowtitle):
-	return AppWindowClass.DefineApplicationWindow(windowsize, windowtitle)
+	return AppWindowClass.DefineApplicationWindow(windowsize, windowtitle, False)
 
+
+
+def createfullscreenwindow(windowsize, windowtitle):
+	return AppWindowClass.DefineApplicationWindow(windowsize, windowtitle, True)

@@ -16,6 +16,7 @@ class DefineInputController:
 		self.inputobject.setareastate("symbol", "Hidden")
 		self.inputobject.setareastate("shift", "Hidden")
 		self.inputobject.setareastate("keyboard", "Enabled")
+		self.inputobject.setareastate("QUIT", "Enabled")
 		self.keyboardbuffer = ""
 		self.keyboardstate = "On"     # Off On Shift Caps Symbol
 
@@ -72,6 +73,8 @@ class DefineInputController:
 		self.definebutton("9",         161, 341,    38,    38, ["keyboard", "shift"])
 		self.definebutton("0",         161, 381,    38,    38, ["keyboard", "shift"])
 		self.definebutton("backspace", 161, 421,    58,    38, ["keyboard", "shift", "symbol"])
+
+		self.definebutton("QUIT",        1,   1,   478,   158, [])
 
 #----------------------------------------------------------------------------------------------------------
 
@@ -153,9 +156,9 @@ class DefineInputController:
 
 
 
-	def definebutton(self, buttonname, along, down, width, height, groupmembership):
+	def definebutton(self, buttonname, down, along, width, height, groupmembership):
 
-		self.inputobject.createarea(buttonname, Vector.createfromvalues(down, along), Vector.createfromvalues(width, height), groupmembership)
+		self.inputobject.createarea(buttonname, Vector.createfromvalues(along, down), Vector.createfromvalues(width, height), groupmembership)
 
 
 
@@ -183,8 +186,11 @@ class DefineInputController:
 		if self.inputobject.getmouseaction() == True:
 			if self.inputobject.getmouseclickaction() == -1:
 				if self.inputobject.getcurrentmouseareastate() == "Enabled":
-					print self.inputobject.getcurrentmousearea()
-					self.processvirtualkeyboard(self.inputobject.getcurrentmousearea())
+					if self.inputobject.getcurrentmousearea() == "QUIT":
+						self.inputobject.forcequit()
+					else:
+						print self.inputobject.getcurrentmousearea()
+						self.processvirtualkeyboard(self.inputobject.getcurrentmousearea())
 
 		return outcome
 
