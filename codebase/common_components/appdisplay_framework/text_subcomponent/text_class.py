@@ -2,6 +2,7 @@ from ....common_components.userinterface_framework import userinterface_module a
 from ....common_components.fileprocessing_framework import fileprocessing_module as File
 
 
+
 class DefineTextGenerator:
 
 	def __init__(self):
