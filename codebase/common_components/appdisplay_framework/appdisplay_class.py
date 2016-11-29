@@ -21,7 +21,7 @@ class DefineApplicationWindow:
 			self.windowobject = GUI.display.set_mode((self.screensize.getcoordinates()))
 			self.screensize = Vector.createfromvector(windowsize)
 		else:
-			self.windowobject = GUI.display.set_mode((0, 0), GUI.FULLSCREEN)
+			self.windowobject = GUI.display.set_mode((0,0), GUI.FULLSCREEN)
 			displayinfo = GUI.display.Info()
 			self.screensize = Vector.createfromvalues(displayinfo.current_w, displayinfo.current_h)
 
