@@ -2,6 +2,7 @@ from window_subcomponent import window_module as Window
 from messagelist_subcomponent import messagelist_module as MessageList
 from . import display_privatefunctions as DisplayFunction
 from ..common_components.datetime_datatypes import datetime_module as DateTime
+from ..common_components.vector_datatype import vector_module as Vector
 
 
 
@@ -318,12 +319,12 @@ class DefineDisplayDriver:
 		boxposition = DisplayFunction.itemposition(tiletype, devicecounter, -1, devicetotal)
 		boxsize = DisplayFunction.alertboxdimensions(tiletype)
 		if statusobject.getalertstatus(self.recentthreshold) == True:
-			self.appwindow.printbox(boxposition, boxsize, DisplayFunction.alertboxflash(tilecolour + " - Bright",
-																										"Black"), 3)
-			self.appwindow.printbox(boxposition, boxsize, DisplayFunction.alertboxflash(tilecolour + " - Bright" ,
-																							tilecolour + " - Dark"), 1)
+			self.appwindow.printbox(boxposition, boxsize, "",
+									DisplayFunction.alertboxflash(tilecolour + " - Bright", "Black"), 3)
+			self.appwindow.printbox(boxposition, boxsize, "",
+									DisplayFunction.alertboxflash(tilecolour + " - Bright" , tilecolour + " - Dark"), 1)
 		else:
-			self.appwindow.printbox(boxposition, boxsize, tilecolour + " - Dark", 1)
+			self.appwindow.printbox(boxposition, boxsize, "", tilecolour + " - Dark", 1)
 
 	# -------------------------------------------------------------------
 	# Refreshes the display of all buttons
@@ -334,12 +335,13 @@ class DefineDisplayDriver:
 		buttonlist = inputcontrollerobject.getbuttoncollection("keyboard")
 
 		for buttonname in buttonlist:
-			if inputcontrollerobject.getbuttonstate(buttonname) != "Disabled":
+			if inputcontrollerobject.getbuttonstate(buttonname) != "Hidden":
 				buttonposition = inputcontrollerobject.getbuttonposition(buttonname)
 				buttonsize = inputcontrollerobject.getbuttonsize(buttonname)
-				self.appwindow.printbox(buttonposition, buttonsize, "Black", 0)
-				self.appwindow.printbox(buttonposition, buttonsize, "White", 1)
-
+				self.appwindow.printbox(buttonposition, buttonsize, "Black", "White", 1)
+				texthor = int(((2 * buttonposition.getx()) + buttonsize.getx()) / 2)
+				textver = buttonposition.gety() + 4
+				self.appwindow.printtext(buttonname, Vector.createfromvalues(texthor,textver), "Centre", "White", "Button Text")
 
 
 

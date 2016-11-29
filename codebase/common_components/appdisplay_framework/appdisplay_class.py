@@ -18,8 +18,8 @@ class DefineApplicationWindow:
 		# Defines the size of the application window
 		# Creates the application window object
 		if (windowsize.getx() > 0) and (windowsize.gety() > 0):
-			self.windowobject = GUI.display.set_mode((self.screensize.getcoordinates()))
 			self.screensize = Vector.createfromvector(windowsize)
+			self.windowobject = GUI.display.set_mode((self.screensize.getcoordinates()))
 		else:
 			self.windowobject = GUI.display.set_mode((0,0), GUI.FULLSCREEN)
 			displayinfo = GUI.display.Info()

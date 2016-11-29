@@ -17,7 +17,8 @@ class DefineWindow:
 		self.windowsize = Vector.createfromvalues(480, 320)
 
 		# Sets up pygame window related properties & methods and loads images, fonts and colours
-		self.windowobject = AppDisplay.createfullscreendisplay("Network Monitor")
+		#self.windowobject = AppDisplay.createfullscreendisplay("Network Monitor")
+		self.windowobject = AppDisplay.createwindow(self.windowsize, "Network Monitor")
 		self.imagesize = {}
 		self.setupimages()
 		self.setupfonts()
@@ -62,6 +63,7 @@ class DefineWindow:
 		self.windowobject.addfont("Unknown Device Label", "", "gillsanscondensed", 30)
 		self.windowobject.addfont("Clock Text", "", "gillsansnormal", 68)
 		self.windowobject.addfont("Banner Text", "", "gillsansnormal", 72)
+		self.windowobject.addfont("Button Text", "", "gillsansnormal", 24)
 
 
 
@@ -124,12 +126,12 @@ class DefineWindow:
 
 
 # -------------------------------------------------------------------
-# Draws a box outline of thickness 2
+# Draws a box
 # -------------------------------------------------------------------
 
-	def printbox(self, topleftvector, dimensionsvector, colourlabel, thickness):
+	def printbox(self, topleftvector, dimensionsvector, fillcolour, bordercolour, thickness):
 		
-		self.windowobject.drawrectangle(topleftvector, dimensionsvector, "", colourlabel, thickness)
+		self.windowobject.drawrectangle(topleftvector, dimensionsvector, fillcolour, bordercolour, thickness)
 
 
 
