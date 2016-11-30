@@ -51,10 +51,13 @@ class DefineWindow:
 		imagelist['wireless'] = "Port"
 		imagelist['wirelessrouter'] = "Device"
 		imagelist['workstation'] = "Device"
+		imagelist['backspace'] = ""
+
 
 		for spritename in imagelist:
 			self.windowobject.addimage(spritename, "images", spritename, True)
-			self.imagesize[spritename] = imagelist[spritename]
+			if imagelist[spritename] != "":
+				self.imagesize[spritename] = imagelist[spritename]
 
 
 
@@ -64,6 +67,7 @@ class DefineWindow:
 		self.windowobject.addfont("Clock Text", "", "gillsansnormal", 68)
 		self.windowobject.addfont("Banner Text", "", "gillsansnormal", 72)
 		self.windowobject.addfont("Button Text", "", "gillsansnormal", 24)
+		self.windowobject.addfont("Small Button Text", "", "gillsansnormal", 12)
 
 
 
@@ -113,6 +117,18 @@ class DefineWindow:
 		if colourlabel != "None":
 			self.windowobject.drawrectangle(positioncoordinates, self.geticonsize(iconname), colourlabel, "", 0)
 		self.windowobject.drawimage(iconname, positioncoordinates)
+
+
+
+# -------------------------------------------------------------------
+# Draws an icon (which is a coloured rectangle with a cutout overlay
+# -------------------------------------------------------------------
+
+	def printimage(self, imagelabel, positioncoordinates):
+
+		imagename = imagelabel.lower()
+		self.windowobject.drawimage(imagename, positioncoordinates)
+
 
 
 # -------------------------------------------------------------------

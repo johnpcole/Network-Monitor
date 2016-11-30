@@ -61,7 +61,7 @@ class DefineDisplayDriver:
 			self.refreshdevicetiles(statusdatabaseobject)
 
 			# Refresh the banner area
-			self.refreshbanner(statusdatabaseobject)
+			#self.refreshbanner(statusdatabaseobject)
 
 			# Refresh the buttons
 			self.refreshbuttons(inputcontrollerobject)
@@ -332,16 +332,49 @@ class DefineDisplayDriver:
 
 	def refreshbuttons(self, inputcontrollerobject):
 
-		buttonlist = inputcontrollerobject.getbuttoncollection("keyboard")
+		if inputcontrollerobject.getkeyboardstate("Off") == False:
 
-		for buttonname in buttonlist:
-			if inputcontrollerobject.getbuttonstate(buttonname) != "Hidden":
-				buttonposition = inputcontrollerobject.getbuttonposition(buttonname)
-				buttonsize = inputcontrollerobject.getbuttonsize(buttonname)
-				self.appwindow.printbox(buttonposition, buttonsize, "Black", "White", 1)
-				texthor = int(((2 * buttonposition.getx()) + buttonsize.getx()) / 2)
-				textver = buttonposition.gety() + 4
-				self.appwindow.printtext(buttonname, Vector.createfromvalues(texthor,textver), "Centre", "White", "Button Text")
+			self.appwindow.printbox(Vector.createfromvalues(0, 160), Vector.createfromvalues(480, 160), "Black", "", 0)
+			buttonlist = inputcontrollerobject.getbuttoncollection("keyboard")
+
+			for buttonname in buttonlist:
+				if inputcontrollerobject.getbuttonstate(buttonname) != "Hidden":
+					buttonposition = inputcontrollerobject.getbuttonposition(buttonname)
+					buttonsize = inputcontrollerobject.getbuttonsize(buttonname)
+					self.appwindow.printbox(buttonposition, buttonsize, "", "White", 1)
+
+					texthor = int(((2 * buttonposition.getx()) + buttonsize.getx()) / 2)
+					textver = buttonposition.gety() + 10
+					textfont = "Small Button Text"
+					if buttonname in ["shift-on", "shift-off"]:
+						textlegend = "SHIFT"
+					elif buttonname in ["caps-on", "caps-off"]:
+						textlegend = "CAPS-LOCK"
+					elif buttonname in ["symbol-on", "symbol-off"]:
+						textlegend = "SYMBOL"
+					elif buttonname == "enter1":
+						textlegend = "ENTER"
+					elif buttonname == "enter2":
+						textlegend = ""
+					elif buttonname == "space":
+						textlegend = "SPACE"
+					elif buttonname == "backspace":
+						textlegend = ""
+						texthor = texthor - 13
+						textver = textver - 1
+						self.appwindow.printimage("backspace", Vector.createfromvalues(texthor, textver))
+					elif buttonname == "escape":
+						textlegend = "ESC"
+					else:
+						textfont = "Button Text"
+						textlegend = buttonname
+						textver = buttonposition.gety() + 3
+					if textlegend != "":
+						self.appwindow.printtext(textlegend, Vector.createfromvalues(texthor, textver), "Centre",
+																								"White", textfont)
+
+
+
 
 
 
