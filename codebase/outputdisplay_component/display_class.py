@@ -318,11 +318,12 @@ class DefineDisplayDriver:
 
 		boxposition = DisplayFunction.itemposition(tiletype, devicecounter, -1, devicetotal)
 		boxsize = DisplayFunction.alertboxdimensions(tiletype)
+
 		if statusobject.getalertstatus(self.recentthreshold) == True:
 			self.appwindow.printbox(boxposition, boxsize, "",
 									DisplayFunction.alertboxflash(tilecolour + " - Bright", "Black"), 3)
 			self.appwindow.printbox(boxposition, boxsize, "",
-									DisplayFunction.alertboxflash(tilecolour + " - Bright" , tilecolour + " - Dark"), 1)
+									DisplayFunction.alertboxflash(tilecolour + " - Bright", tilecolour + " - Dark"), 1)
 		else:
 			self.appwindow.printbox(boxposition, boxsize, "", tilecolour + " - Dark", 1)
 

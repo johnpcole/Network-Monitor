@@ -20,7 +20,7 @@ class DefineInputController:
 		self.inputobject.setareastate("base", "Enabled")
 		self.inputobject.setareastate("QUIT", "Enabled")
 		self.keyboardbuffer = ""
-		self.keyboardstate = Enumeration.createenum(["Off", "On", "Shift", "Caps", "Symbol"], "On")
+		self.keyboardstate = Enumeration.createenum(["Off", "On", "Shift", "Caps", "Symbol"], "Off")
 
 
 
@@ -152,7 +152,24 @@ class DefineInputController:
 		self.definebutton("(",           0, 18, 2, 2, ["keyboard", "symbol"])
 		self.definebutton(")",           0, 20, 2, 2, ["keyboard", "symbol"])
 
-#----------------------------------------------------------------------------------------------------------
+		self.definebutton("known-0", -100, -100, 10, 10, ["devices"])
+		self.definebutton("known-1", -100, -100, 10, 10, ["devices"])
+		self.definebutton("known-2", -100, -100, 10, 10, ["devices"])
+		self.definebutton("known-3", -100, -100, 10, 10, ["devices"])
+		self.definebutton("known-4", -100, -100, 10, 10, ["devices"])
+		self.definebutton("known-5", -100, -100, 10, 10, ["devices"])
+		self.definebutton("known-6", -100, -100, 10, 10, ["devices"])
+		self.definebutton("known-7", -100, -100, 10, 10, ["devices"])
+		self.definebutton("known-8", -100, -100, 10, 10, ["devices"])
+		self.definebutton("unknown-0", -100, -100, 10, 10, ["devices"])
+		self.definebutton("unknown-1", -100, -100, 10, 10, ["devices"])
+		self.definebutton("unknown-2", -100, -100, 10, 10, ["devices"])
+		self.definebutton("unknown-3", -100, -100, 10, 10, ["devices"])
+
+
+
+
+	#----------------------------------------------------------------------------------------------------------
 
 
 
@@ -263,8 +280,13 @@ class DefineInputController:
 
 
 
+	# -------------------------------------------------------------------
+	# Changes button dimensions
+	# -------------------------------------------------------------------
 
+	def changebuttondimensions(self, buttonname, newposition, newdimensions):
 
+		self.inputobject.setareadimensions(self, buttonname, newposition, newdimensions)
 
 
 
