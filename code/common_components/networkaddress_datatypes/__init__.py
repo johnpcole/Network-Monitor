@@ -1,2 +1,0 @@
-import ipaddress_datatype as IPAddress
-import macaddress_datatype as MacAddress
