@@ -1,6 +1,8 @@
 from ..common_components.appinput_framework import appinput_module as AppInput
 from ..common_components.vector_datatype import vector_module as Vector
 from ..common_components.enumeration_datatype import enumeration_module as Enumeration
+
+
 # ===========================================================================================================
 # This class captures all user inputs using pygame.
 # ===========================================================================================================
@@ -111,33 +113,33 @@ class DefineInputController:
 
 #----------------------------------------------------------------------------------------------------------
 
-		self.definebutton("\\",          3,  4, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("<",           3,  6, 2, 2, ["keyboard", "symbol"])
-		self.definebutton(">",           3,  8, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("?",           3, 10, 2, 2, ["keyboard", "symbol"])
-		self.definebutton(",",           3, 12, 2, 2, ["keyboard", "symbol"])
-		self.definebutton(".",           3, 14, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("/",           3, 16, 2, 2, ["keyboard", "symbol"])
+		self.definebutton(u"\u20ac",     3,  3, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("\\",          3,  5, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("<",           3,  7, 2, 2, ["keyboard", "symbol"])
+		self.definebutton(">",           3,  9, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("?",           3, 11, 2, 2, ["keyboard", "symbol"])
+		self.definebutton(",",           3, 13, 2, 2, ["keyboard", "symbol"])
+		self.definebutton(".",           3, 15, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("/",           3, 17, 2, 2, ["keyboard", "symbol"])
 
-		self.definebutton("|",           2,  4, 2, 2, ["keyboard", "symbol"])
-		self.definebutton(":",           2,  6, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("@",           2,  8, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("~",           2, 10, 2, 2, ["keyboard", "symbol"])
-		self.definebutton(";",           2, 12, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("'",           2, 14, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("#",           2, 16, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("`",           2,  3, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("|",           2,  5, 2, 2, ["keyboard", "symbol"])
+		self.definebutton(":",           2,  7, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("@",           2,  9, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("~",           2, 11, 2, 2, ["keyboard", "symbol"])
+		self.definebutton(";",           2, 13, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("'",           2, 15, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("#",           2, 17, 2, 2, ["keyboard", "symbol"])
 
 		self.definebutton("symbol-off",  1,  0, 2, 2, ["keyboard", "symbol"])
-		self.definebutton(u"\u20ac",     1,  3, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("_",           1,  5, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("+",           1,  7, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("-",           1,  9, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("=",           1, 11, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("`",           1, 13, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("{",           1, 15, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("}",           1, 17, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("[",           1, 19, 2, 2, ["keyboard", "symbol"])
-		self.definebutton("]",           1, 21, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("_",           1,  3, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("+",           1,  5, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("-",           1,  7, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("=",           1,  9, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("{",           1, 11, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("}",           1, 13, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("[",           1, 15, 2, 2, ["keyboard", "symbol"])
+		self.definebutton("]",           1, 17, 2, 2, ["keyboard", "symbol"])
 
 		self.definebutton("!",           0,  2, 2, 2, ["keyboard", "symbol"])
 		self.definebutton("\"",          0,  4, 2, 2, ["keyboard", "symbol"])
@@ -196,7 +198,6 @@ class DefineInputController:
 					if self.inputobject.getcurrentmousearea() == "QUIT":
 						self.inputobject.forcequit()
 					else:
-						print self.inputobject.getcurrentmousearea()
 						self.processvirtualkeyboard(self.inputobject.getcurrentmousearea())
 
 		return outcome

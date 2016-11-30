@@ -334,7 +334,7 @@ class DefineDisplayDriver:
 
 		if inputcontrollerobject.getkeyboardstate("Off") == False:
 
-			self.appwindow.printbox(Vector.createfromvalues(0, 160), Vector.createfromvalues(480, 160), "Black", "", 0)
+			self.appwindow.printbox(Vector.createfromvalues(0, 166), Vector.createfromvalues(480, 160), "Black", "", 0)
 			buttonlist = inputcontrollerobject.getbuttoncollection("keyboard")
 
 			for buttonname in buttonlist:
@@ -347,13 +347,15 @@ class DefineDisplayDriver:
 					textver = buttonposition.gety() + 10
 					textfont = "Small Button Text"
 					if buttonname in ["shift-on", "shift-off"]:
-						textlegend = "SHIFT"
+						textlegend = "CAPS-SHIFT"
 					elif buttonname in ["caps-on", "caps-off"]:
 						textlegend = "CAPS-LOCK"
 					elif buttonname in ["symbol-on", "symbol-off"]:
 						textlegend = "SYMBOL"
 					elif buttonname == "enter1":
 						textlegend = "ENTER"
+						self.appwindow.printbox(Vector.add(buttonposition, Vector.createfromvalues(20, -3)),
+																	Vector.createfromvalues(34, 6), "Black", "", 0)
 					elif buttonname == "enter2":
 						textlegend = ""
 					elif buttonname == "space":
@@ -372,7 +374,6 @@ class DefineDisplayDriver:
 					if textlegend != "":
 						self.appwindow.printtext(textlegend, Vector.createfromvalues(texthor, textver), "Centre",
 																								"White", textfont)
-
 
 
 
