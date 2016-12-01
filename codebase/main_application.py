@@ -39,6 +39,6 @@ def runapplication():
 
 		displaydriver.rundisplayoutputservice(statusdatabase, inputcontroller)
 
-
+		inputcontroller.updatetilebuttons(statusdatabase, displaydriver)
 
 	GUI.quit()

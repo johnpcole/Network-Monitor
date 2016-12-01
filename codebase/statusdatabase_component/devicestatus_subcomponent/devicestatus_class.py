@@ -1,5 +1,5 @@
 from ...common_components.datetime_datatypes import datetime_module as DateTime
-
+from ...common_components.vector_datatype import vector_module as Vector
 
 
 # ===========================================================================================================

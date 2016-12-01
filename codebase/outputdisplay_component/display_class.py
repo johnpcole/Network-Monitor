@@ -51,6 +51,7 @@ class DefineDisplayDriver:
 
 	def rundisplayoutputservice(self, statusdatabaseobject, inputcontrollerobject):
 
+
 		# Determine whether to bother to update the display
 		if self.cycledisplay() == True:
 
@@ -64,10 +65,23 @@ class DefineDisplayDriver:
 			#self.refreshbanner(statusdatabaseobject)
 
 			# Refresh the buttons
-			self.refreshbuttons(inputcontrollerobject)
+			#self.refreshbuttons(inputcontrollerobject)
+
+			if inputcontrollerobject.getappmode("Device Detail") == True:
+
+				self.refreshdeviceinfooverlay()
+
+			else:
+
+				assert inputcontrollerobject.getappmode("Overview") == True, "Unknown App Mode"
+
 
 			# Refresh the screen
 			self.appwindow.refreshscreen()
+
+
+
+
 
 # -------------------------------------------------------------------
 # Updates the clock
@@ -264,8 +278,8 @@ class DefineDisplayDriver:
 			self.appwindow.printtext(statusobject.getname(), iconposition, "Left", tilecolour + " - Bright",
 																								"Unknown Device Label")
 
-		# Draw the alert box (if it's recently changed)
-		self.drawalertbox(devicecounter, statusobject, devicetotal, tiletype, tilecolour)
+		# Draw tile border (which includes the alert flashing if the device has recently changed)
+		self.drawtileborder(devicecounter, statusobject, devicetotal, tiletype, tilecolour)
 
 		return (devicecounter + 1)
 
@@ -314,10 +328,10 @@ class DefineDisplayDriver:
 	# Draws the box around each device
 	# -------------------------------------------------------------------
 
-	def drawalertbox(self, devicecounter, statusobject, devicetotal, tiletype, tilecolour):
+	def drawtileborder(self, devicecounter, statusobject, devicetotal, tiletype, tilecolour):
 
-		boxposition = DisplayFunction.itemposition(tiletype, devicecounter, -1, devicetotal)
-		boxsize = DisplayFunction.alertboxdimensions(tiletype)
+		boxposition, boxsize = self.gettiledimensions(devicecounter, devicetotal, tiletype)
+
 		if statusobject.getalertstatus(self.recentthreshold) == True:
 			self.appwindow.printbox(boxposition, boxsize, "",
 									DisplayFunction.alertboxflash(tilecolour + " - Bright", "Black"), 3)
@@ -325,6 +339,8 @@ class DefineDisplayDriver:
 									DisplayFunction.alertboxflash(tilecolour + " - Bright" , tilecolour + " - Dark"), 1)
 		else:
 			self.appwindow.printbox(boxposition, boxsize, "", tilecolour + " - Dark", 1)
+
+
 
 	# -------------------------------------------------------------------
 	# Refreshes the display of all buttons
@@ -375,21 +391,28 @@ class DefineDisplayDriver:
 						self.appwindow.printtext(textlegend, Vector.createfromvalues(texthor, textver), "Centre",
 																								"White", textfont)
 
+	# -------------------------------------------------------------------
+	# Refreshes the display of single device info overlay
+	# -------------------------------------------------------------------
+
+	def refreshdeviceinfooverlay(self):
+
+		self.appwindow.printbox(Vector.createfromvalues(10, 10), Vector.createfromvalues(460, 300), "Dark Blue", "Dark Red", 1)
+		print "DRAWING BOX"
 
 
-
-
-
-
-
-
-
-
-
-
-
-# ===========================================================================================================
+	# ===========================================================================================================
 # Get Information
 # ===========================================================================================================
 
 
+	# -------------------------------------------------------------------
+	# Returns the location & size of a tile
+	# -------------------------------------------------------------------
+
+	def gettiledimensions(self, devicecounter, devicetotal, tiletype):
+
+		boxposition = DisplayFunction.itemposition(tiletype, devicecounter, -1, devicetotal)
+		boxsize = DisplayFunction.alertboxdimensions(tiletype)
+
+		return boxposition, boxsize

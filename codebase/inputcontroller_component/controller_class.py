@@ -17,10 +17,12 @@ class DefineInputController:
 		self.setupbuttons()
 		self.inputobject.setareastate("symbol", "Hidden")
 		self.inputobject.setareastate("shift", "Hidden")
-		self.inputobject.setareastate("base", "Enabled")
+		self.inputobject.setareastate("base", "Hidden")
 		self.inputobject.setareastate("QUIT", "Enabled")
+		self.inputobject.setareastate("devices", "Enabled")
 		self.keyboardbuffer = ""
-		self.keyboardstate = Enumeration.createenum(["Off", "On", "Shift", "Caps", "Symbol"], "On")
+		self.keyboardstate = Enumeration.createenum(["Off", "On", "Shift", "Caps", "Symbol"], "Off")
+		self.appmode = Enumeration.createenum(["Overview", "Device Detail"], "Overview")
 
 
 
@@ -76,8 +78,6 @@ class DefineInputController:
 		self.definebutton("9",           0, 18, 2, 2, ["keyboard", "base", "shift"])
 		self.definebutton("0",           0, 20, 2, 2, ["keyboard", "base", "shift"])
 		self.definebutton("backspace",   0, 22, 3, 2, ["keyboard", "base", "shift", "symbol"])
-
-		self.definebutton("QUIT",        1,   1,   478,   158, [])
 
 #----------------------------------------------------------------------------------------------------------
 
@@ -154,6 +154,27 @@ class DefineInputController:
 
 #----------------------------------------------------------------------------------------------------------
 
+		self.definebutton("QUIT", 1, 1, 478, 50, [])
+
+		self.definebutton("device-known-0", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-known-1", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-known-2", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-known-3", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-known-4", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-known-5", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-known-6", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-known-7", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-known-8", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-known-9", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-unknown-0", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-unknown-1", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-unknown-2", -100, -100, 10, 10, ["devices"])
+		self.definebutton("device-unknown-3", -100, -100, 10, 10, ["devices"])
+
+# ----------------------------------------------------------------------------------------------------------
+
+
+
 
 
 
@@ -198,7 +219,10 @@ class DefineInputController:
 					if self.inputobject.getcurrentmousearea() == "QUIT":
 						self.inputobject.forcequit()
 					else:
-						self.processvirtualkeyboard(self.inputobject.getcurrentmousearea())
+						if self.keyboardstate.get("Off") == False:
+							self.processvirtualkeyboard(self.inputobject.getcurrentmousearea())
+						else:
+							self.processtileclicks(self.inputobject.getcurrentmousearea())
 
 		return outcome
 
@@ -264,10 +288,44 @@ class DefineInputController:
 
 
 
+	# -------------------------------------------------------------------
+	# Processes tile button clicks
+	# -------------------------------------------------------------------
+
+	def processtileclicks(self, action):
+
+		#if (action == "enter1") or (action == "enter2"):
+		print "TILE CLICKED! ", action
+
+		self.appmode.set("Device Detail")
 
 
 
 
+	# -------------------------------------------------------------------
+	# Updates the tile buttons based on which tiles are displayed
+	# -------------------------------------------------------------------
+
+	def updatetilebuttons(self, statusdatabase, displaydriver):
+
+		knowntotal = statusdatabase.getprioritisedstatuscount("Known")
+		unknowntotal = statusdatabase.getprioritisedstatuscount("Unknown")
+
+		for knownindex in range(0, 10):
+			if knownindex < knowntotal:
+				buttonposition, buttonsize = displaydriver.gettiledimensions(knownindex, knowntotal, "Narrow")
+			else:
+				buttonposition = Vector.createblank()
+				buttonsize = Vector.createfromvalues(10, 10)
+			self.inputobject.setareadimensions("device-known-" + str(knownindex), buttonposition, buttonsize)
+
+		for unknownindex in range(0, 4):
+			if unknownindex < unknowntotal:
+				buttonposition, buttonsize = displaydriver.gettiledimensions(unknownindex, unknowntotal, "Wide")
+			else:
+				buttonposition = Vector.createblank()
+				buttonsize = Vector.createfromvalues(10, 10)
+			self.inputobject.setareadimensions("device-unknown-" + str(unknownindex), buttonposition, buttonsize)
 
 
 
@@ -330,5 +388,15 @@ class DefineInputController:
 	# -------------------------------------------------------------------
 
 	def getkeyboardstate(self, desiredvalue):
+
 		return self.keyboardstate.get(desiredvalue)
+
+
+	# -------------------------------------------------------------------
+	# Returns the application mode
+	# -------------------------------------------------------------------
+
+	def getappmode(self, desiredvalue):
+
+		return self.appmode.get(desiredvalue)
 
