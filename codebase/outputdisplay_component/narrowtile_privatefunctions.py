@@ -95,8 +95,6 @@ def getposition(itemindexinteger, itemcountinteger):
 		rows = 2
 		firstrowcolcount = int((totalitems + 1) / 2)
 		
-	secondrowcolcount = totalitems - firstrowcolcount
-	
 	if itemindexinteger > (firstrowcolcount - 1):
 		currentrow = 1
 		currentcol = itemindexinteger - firstrowcolcount

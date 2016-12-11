@@ -124,7 +124,7 @@ class DefineStatusDatabase:
 	def addknowndevices(self):
 	
 		# Get the scan results from the file
-		knowndeviceslist = File.readfromdisk("database/knowndevices.txt")
+		knowndeviceslist = File.readfromdisk(File.concatenatepaths("database", "knowndevices.txt"))
 
 		# Loop over all lines in the file
 		for deviceline in knowndeviceslist:
@@ -178,7 +178,9 @@ class DefineStatusDatabase:
 
 
 # ---------------------------------------------------------
-# This method returns the prioritised list of devices
+# This method returns the prioritised list of devices,
+# that is the truncated list of devices that are
+# important enough to be displayed
 # ---------------------------------------------------------
 
 	def getprioritisedstatuslist(self, knownlimit, unknownlimit):
