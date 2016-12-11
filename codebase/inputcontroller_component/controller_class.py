@@ -22,10 +22,7 @@ class DefineInputController:
 		self.inputobject.setareastate("devices", "Enabled")
 		self.keyboardbuffer = ""
 		self.keyboardstate = Enumeration.createenum(["Off", "On", "Shift", "Caps", "Symbol"], "Off")
-<<<<<<< HEAD
-=======
 		self.appmode = Enumeration.createenum(["Overview", "Device Detail"], "Overview")
->>>>>>> origin/Add-Device-Management
 
 
 
@@ -311,9 +308,12 @@ class DefineInputController:
 	# Changes button dimensions
 	# -------------------------------------------------------------------
 
-<<<<<<< HEAD
 	def changebuttondimensions(self, buttonname, newposition, newdimensions):
-=======
+
+		self.inputobject.setareadimensions(buttonname, newposition, newdimensions)
+
+
+
 	# -------------------------------------------------------------------
 	# Processes tile button clicks
 	# -------------------------------------------------------------------
@@ -325,9 +325,6 @@ class DefineInputController:
 
 		self.appmode.set("Device Detail")
 
->>>>>>> origin/Add-Device-Management
-
-		self.inputobject.setareadimensions(self, buttonname, newposition, newdimensions)
 
 
 	# -------------------------------------------------------------------

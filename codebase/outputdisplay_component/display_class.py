@@ -332,12 +332,6 @@ class DefineDisplayDriver:
 
 		boxposition, boxsize = self.gettiledimensions(devicecounter, devicetotal, tiletype)
 
-<<<<<<< HEAD
-		boxposition = DisplayFunction.itemposition(tiletype, devicecounter, -1, devicetotal)
-		boxsize = DisplayFunction.alertboxdimensions(tiletype)
-
-=======
->>>>>>> origin/Add-Device-Management
 		if statusobject.getalertstatus(self.recentthreshold) == True:
 			self.appwindow.printbox(boxposition, boxsize, "",
 									DisplayFunction.alertboxflash(tilecolour + " - Bright", "Black"), 3)
@@ -404,10 +398,10 @@ class DefineDisplayDriver:
 	def refreshdeviceinfooverlay(self):
 
 		self.appwindow.printbox(Vector.createfromvalues(10, 10), Vector.createfromvalues(460, 300), "Dark Blue", "Dark Red", 1)
-		print "DRAWING BOX"
 
 
-	# ===========================================================================================================
+
+# ===========================================================================================================
 # Get Information
 # ===========================================================================================================
 
