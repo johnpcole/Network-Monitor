@@ -1,4 +1,5 @@
 import os as OperatingSystem
+import shutil as FileSystem
 
 
 # ---------------------------------------------
@@ -29,41 +30,6 @@ def readfromdisk(filename):
 
 	
 	
-# ---------------------------------------------
-# Returns a list of strings, extracted from a
-# single string of tab separated substrings
-# ---------------------------------------------
-
-def extracttabulateddata(fileline):
-
-	splitdata = fileline.split("\t")
-	return splitdata
-
-
-
-# ---------------------------------------------
-# Returns a list of strings, extracted from a
-# single string of comma-space separated substrings
-# ---------------------------------------------
-
-def extractcommadata(fileline):
-
-	splitdata = fileline.split(", ")
-	return splitdata
-
-
-
-# ---------------------------------------------
-# Returns a list of two strings, extracted from a
-# single string of space-equals-space separated substrings
-# ---------------------------------------------
-
-def extractdatapair(dataitem):
-
-	splitdata = dataitem.split(" = ")
-	return splitdata[0], splitdata[1]
-
-
 
 # ---------------------------------------------
 # Returns a list items found in the specified
@@ -175,5 +141,59 @@ def writetodisk(filename, outputlist):
 
 
 
+# ---------------------------------------------
+# Copies a file from source to destination
+# ---------------------------------------------
+
+def copyfile(fullsourcepath, fulldestinationpath):
+
+	outcome = True
+
+	try:
+		FileSystem.copy2(fullsourcepath, fulldestinationpath)
+
+	except:
+		print "Cannot copy file - ", fullsourcepath, fulldestinationpath
+		outcome = False
+
+	return outcome
+
+
+
+# ---------------------------------------------
+# Makes a folder
+# ---------------------------------------------
+
+def makefolder(fullpath):
+
+	outcome = True
+
+	try:
+		OperatingSystem.mkdir(fullpath)
+
+	except:
+		print "Cannot create folder - ", fullpath
+		outcome = False
+
+	return outcome
+
+
+
+# ---------------------------------------------
+# Deletes a folder
+# ---------------------------------------------
+
+def deletefolder(fullpath):
+
+	outcome = True
+
+	try:
+		FileSystem.rmtree(fullpath)
+
+	except:
+		print "Cannot delete folder - ", fullpath
+		outcome = False
+
+	return outcome
 
 

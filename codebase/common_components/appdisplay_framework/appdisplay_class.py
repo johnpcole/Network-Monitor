@@ -15,6 +15,7 @@ class DefineApplicationWindow:
 
 	def __init__(self, windowsize, windowtitle):
 
+
 		# Defines the size of the application window
 		# Creates the application window object
 		if (windowsize.getx() > 0) and (windowsize.gety() > 0):
